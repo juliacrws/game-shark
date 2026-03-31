@@ -5,65 +5,95 @@
 
 <div class="row justify-content-center mt-5 mb-5">
     <div class="col-md-5">
-        <div class="card bg-black border-warning shadow-lg">
-            <div class="card-header border-warning text-center">
-                <h4 class="text-warning fw-bold mt-2"><i class="bi bi-controller"></i> Novo Player</h4>
-                <p class="text-muted small mb-0">Crie seu save state no oceano digital</p>
+        <div class="card card-geek shadow-lg bg-darker-bg border-warning">
+            <div class="card-header border-bottom border-warning p-4 text-center">
+                <i class="bi bi-controller display-4 text-warning mb-2"></i>
+                <h3 class="text-uppercase fw-bold text-light" style="font-family: 'Orbitron', sans-serif;">Novo Player</h3>
+                <p class="text-muted font-monospace mb-0">Crie seu save state no oceano digital</p>
             </div>
-            <div class="card-body p-4">
+            
+            <div class="card-body p-4 p-md-5">
                 <form asp-action="Register" method="post">
                     @Html.AntiForgeryToken()
-                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
-                    
-                    <div class="mb-3">
-                        <label asp-for="Nome" class="form-label text-muted fw-bold">Nome de Jogador</label>
-                        <input asp-for="Nome" class="form-control bg-dark text-light border-secondary" placeholder="Ex: Mestre Kame" />
-                        <span asp-validation-for="Nome" class="text-danger small"></span>
+                    <div asp-validation-summary="ModelOnly" class="text-danger fw-bold mb-3 font-monospace"></div>
+
+                    <div class="mb-4">
+                        <label asp-for="Nome" class="form-label label-geek text-warning"><i class="bi bi-person-badge"></i> Nome de Jogador</label>
+                        <input asp-for="Nome" class="form-control form-control-geek border-secondary" placeholder="Ex: Mestre Kame" />
+                        <span asp-validation-for="Nome" class="text-danger small fw-bold"></span>
                     </div>
 
-                    <div class="mb-3">
-                        <label asp-for="Email" class="form-label text-muted fw-bold">E-mail</label>
-                        <input asp-for="Email" type="email" class="form-control bg-dark text-light border-secondary" placeholder="player@gameshark.com" />
-                        <span asp-validation-for="Email" class="text-danger small"></span>
-                    </div>
-                    
                     <div class="mb-4">
-                        <label asp-for="Senha" class="form-label text-muted fw-bold">Senha de Acesso</label>
+                        <label asp-for="Email" class="form-label label-geek text-warning"><i class="bi bi-envelope"></i> E-mail Criptografado</label>
+                        <input asp-for="Email" type="email" class="form-control form-control-geek border-secondary" placeholder="player@gameshark.com" />
+                        <span asp-validation-for="Email" class="text-danger small fw-bold"></span>
+                    </div>
+
+                    <div class="mb-4">
+                        <label asp-for="Senha" class="form-label label-geek text-warning"><i class="bi bi-key"></i> Senha de Acesso</label>
                         <div class="input-group">
-                            <input asp-for="Senha" type="password" class="form-control bg-dark text-light border-secondary" placeholder="Escolha uma senha forte" id="campoSenha" />
-                            <button class="btn btn-outline-secondary border-secondary" type="button" onclick="toggleSenha()">
-                                <i class="bi bi-eye" id="iconeSenha"></i>
+                            <input asp-for="Senha" type="password" class="form-control form-control-geek border-secondary" placeholder="Escolha uma senha forte" id="campoSenha1" />
+                            <button class="btn btn-outline-warning" type="button" onclick="toggleSenha('campoSenha1', 'iconeSenha1')">
+                                <i class="bi bi-eye" id="iconeSenha1"></i>
                             </button>
                         </div>
-                        <span asp-validation-for="Senha" class="text-danger small"></span>
+                        <span asp-validation-for="Senha" class="text-danger small fw-bold"></span>
                     </div>
 
-                    <button type="submit" class="btn btn-warning w-100 fw-bold text-dark py-2 fs-5">Criar Conta e Iniciar Quest</button>
-                    
-                    <div class="text-center mt-4 pt-3 border-top border-secondary">
-                        <span class="text-muted small">Já tem um save state?</span><br />
-                        <a asp-action="Login" class="text-info text-decoration-none fw-bold">Faça Login aqui</a>
+                    <div class="mb-4">
+                        <label asp-for="ConfirmarSenha" class="form-label label-geek text-warning"><i class="bi bi-check2-all"></i> Confirmar Código</label>
+                        <div class="input-group">
+                            <input asp-for="ConfirmarSenha" type="password" class="form-control form-control-geek border-secondary" placeholder="Repita sua senha" id="campoSenha2" />
+                            <button class="btn btn-outline-warning" type="button" onclick="toggleSenha('campoSenha2', 'iconeSenha2')">
+                                <i class="bi bi-eye" id="iconeSenha2"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="ConfirmarSenha" class="text-danger small fw-bold"></span>
+                    </div>
+
+                    <div class="bg-black p-3 rounded border border-secondary mb-4">
+                        <h6 class="text-muted text-uppercase fw-bold mb-2" style="font-size: 0.75rem;"><i class="bi bi-shield-check"></i> Regras de Segurança:</h6>
+                        <ul class="text-muted font-monospace small mb-0 ps-3">
+                            <li>Mínimo de <strong class="text-light">6 caracteres</strong></li>
+                            <li><strong class="text-light">1 letra maiúscula</strong> e <strong class="text-light">1 minúscula</strong></li>
+                            <li>Pelo menos <strong class="text-light">1 número</strong> e <strong class="text-light">1 caractere especial</strong> (!, @@, #)</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-warning btn-lg fw-bold text-dark text-uppercase" style="font-family: 'Orbitron', sans-serif;">
+                            Criar Conta e Iniciar Quest <i class="bi bi-arrow-right ms-2"></i>
+                        </button>
                     </div>
                 </form>
+            </div>
+            
+            <div class="card-footer bg-black border-top border-warning p-4 text-center">
+                <span class="text-muted font-monospace">Já tem um save state?</span>
+                <a asp-action="Login" class="text-warning fw-bold text-decoration-none ms-2 text-uppercase">Faça Login aqui</a>
             </div>
         </div>
     </div>
 </div>
 
 @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     <script>
-        function toggleSenha() {
-            var input = document.getElementById("campoSenha");
-            var icone = document.getElementById("iconeSenha");
+        // Script atualizado para receber o ID do campo e do ícone de forma dinâmica
+        function toggleSenha(inputId, iconeId) {
+            var input = document.getElementById(inputId);
+            var icone = document.getElementById(iconeId);
             
             if (input.type === "password") {
                 input.type = "text";
                 icone.classList.remove("bi-eye");
-                icone.classList.add("bi-eye-slash"); // Muda pro olhinho cortado
+                icone.classList.add("bi-eye-slash");
             } else {
                 input.type = "password";
                 icone.classList.remove("bi-eye-slash");
-                icone.classList.add("bi-eye"); // Volta pro olhinho normal
+                icone.classList.add("bi-eye");
             }
         }
     </script>

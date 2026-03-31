@@ -95,18 +95,28 @@
                             
                             <h5 class="card-title fw-bold text-light mb-1 text-truncate text-uppercase" title="@produto.Nome" style="font-family: 'Orbitron', sans-serif;">@produto.Nome</h5>
                             
-                            <div class="mt-auto pt-3 border-top border-secondary d-flex justify-content-between align-items-center">
-                                <span class="fs-4 fw-bold text-neon-green" style="font-family: 'Rajdhani', sans-serif;">R$ @produto.Preco.ToString("N2")</span>
+                            <div class="mt-auto pt-3 border-top border-secondary d-flex justify-content-between align-items-center position-relative">
+                                
+                                @if (produto.Estoque == 1)
+                                {
+                                    <div class="position-absolute w-100 text-center" style="top: -20px; left: 0;">
+                                        <span class="badge bg-warning text-dark fw-bold border border-warning shadow-sm" style="letter-spacing: 1px; font-size: 0.7rem; animation: pulse 2s infinite;">
+                                            <i class="bi bi-exclamation-triangle-fill"></i> LAST UNIT!
+                                        </span>
+                                    </div>
+                                }
+
+                                <span class="fs-4 fw-bold @(produto.Estoque > 0 ? "text-neon-green" : "text-muted text-decoration-line-through")" style="font-family: 'Rajdhani', sans-serif;">R$ @produto.Preco.ToString("N2")</span>
                                 
                                 @if (produto.Estoque > 0)
                                 {
                                     <div class="d-flex gap-2">
-                                        <a href="/Home/Details/@produto.Id" class="btn btn-outline-secondary btn-sm rounded-circle d-flex justify-content-center align-items-center" title="Detalhes do Jogo" style="width: 45px; height: 45px;">
+                                        <a href="/Home/Details/@produto.Id" class="btn btn-outline-secondary btn-sm rounded-circle d-flex justify-content-center align-items-center" title="Details" style="width: 45px; height: 45px;">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                         <form asp-controller="Carrinho" asp-action="Adicionar" method="post" class="m-0">
                                             <input type="hidden" name="id" value="@produto.Id" />
-                                            <button type="submit" class="btn btn-outline-neon-cyan fw-bold rounded-circle d-flex justify-content-center align-items-center cyber-buy-btn" title="Garantir Loot" style="width: 45px; height: 45px;">
+                                            <button type="submit" class="btn btn-outline-neon-cyan fw-bold rounded-circle d-flex justify-content-center align-items-center cyber-buy-btn" title="Add to Cart" style="width: 45px; height: 45px;">
                                                 <i class="bi bi-cart-plus-fill fs-5"></i>
                                             </button>
                                         </form>
@@ -114,9 +124,37 @@
                                 }
                                 else
                                 {
-                                    <button class="btn btn-danger disabled px-3 py-2 border border-danger fw-bold rounded" style="letter-spacing: 1px; font-size: 0.8rem;">
-                                        <i class="bi bi-x-octagon-fill"></i> ESGOTADO
+                                    <button class="btn btn-outline-warning btn-sm fw-bold rounded px-3 py-2 d-flex align-items-center gap-2 cyber-buy-btn" data-bs-toggle="modal" data-bs-target="#notifyModal-@produto.Id" style="letter-spacing: 1px; font-size: 0.75rem;">
+                                        <i class="bi bi-bell-fill"></i> NOTIFY ME
                                     </button>
+
+                                    <div class="modal fade" id="notifyModal-@produto.Id" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content bg-darker-bg border-warning shadow-lg rounded-geek">
+                                                <div class="modal-header border-bottom border-secondary">
+                                                    <h5 class="modal-title text-warning fw-bold text-uppercase" style="font-family: 'Orbitron', sans-serif;">
+                                                        <i class="bi bi-radar"></i> Loot Radar Activated
+                                                    </h5>
+                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body p-4 text-center">
+                                                    <h4 class="text-light fw-bold mb-3">@produto.Nome</h4>
+                                                    <p class="text-muted font-monospace mb-4">Enter your email to get alerted when this item is back in stock.</p>
+                                                    
+                                                    <form asp-controller="Home" asp-action="AviseMe" method="post">
+                                                        <input type="hidden" name="produtoId" value="@produto.Id" />
+                                                        <div class="input-group mb-3">
+                                                            <span class="input-group-text bg-black border-secondary text-warning"><i class="bi bi-envelope-at"></i></span>
+                                                            <input type="email" name="emailCliente" class="form-control form-control-geek border-secondary" placeholder="your.email@cyber.com" required>
+                                                        </div>
+                                                        <button type="submit" class="btn btn-warning text-dark fw-bold w-100 text-uppercase py-2" style="font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">
+                                                            Track Inventory
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 }
                             </div>
                         </div>
@@ -127,8 +165,8 @@
         else
         {
             <div class="col-12 text-center py-5 bg-black border border-secondary rounded-geek mt-4">
-                <h4 class="text-muted mb-3"><i class="bi bi-x-octagon display-4 d-block mb-2"></i>Nenhum Loot no Arsenal</h4>
-                <a href="/Admin/Produtos" class="btn btn-neon-cyan mt-3 fw-bold">Cadastrar Produtos</a>
+                <h4 class="text-muted mb-3"><i class="bi bi-x-octagon display-4 d-block mb-2"></i>No Loot Found</h4>
+                <a href="/Admin/Produtos" class="btn btn-neon-cyan mt-3 fw-bold">Register Products</a>
             </div>
         }
     </div>

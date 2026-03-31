@@ -28,62 +28,58 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-dark navbar-geek mb-4 py-3 sticky-top">
-            <div class="container">
-                <a class="navbar-brand text-neon-cyan fw-bold d-flex align-items-center gap-2 logo-cyber" asp-area="" asp-controller="Home" asp-action="Index" style="letter-spacing: 2px;">
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-geek mb-4 py-3 sticky-top shadow-lg">
+            <div class="container-fluid px-4">
+                <a class="navbar-brand text-neon-cyan fw-bold d-flex align-items-center gap-2 logo-cyber me-4" asp-area="" asp-controller="Home" asp-action="Index" style="letter-spacing: 2px;">
                     <img src="~/images/favicon.png" alt="Logo GameShark" style="width: 32px; height: 32px;" class="rounded" />
                     GAMESHARK
                 </a>
+                
                 <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1 align-items-center ms-3">
-                        <li class="nav-item">
-                            <a class="nav-link text-uppercase" style="letter-spacing: 1px;" asp-area="" asp-controller="Home" asp-action="Index">Catálogo</a>
-                        </li>
                 
+                <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between">
+                    
+                    <ul class="navbar-nav align-items-center mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link text-uppercase fw-bold text-light transition-hover" asp-controller="Home" asp-action="Index">Catálogo</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-uppercase text-muted transition-hover" href="#" data-bs-toggle="dropdown">Plataformas</a>
+                            <ul class="dropdown-menu dropdown-menu-dark bg-darker-bg border-secondary">
+                                <li><a class="dropdown-item text-light transition-hover" href="/Home?busca=PlayStation">PlayStation</a></li>
+                                <li><a class="dropdown-item text-light transition-hover" href="/Home?busca=Xbox">Xbox</a></li>
+                                <li><a class="dropdown-item text-light transition-hover" href="/Home?busca=PC">PC Master Race</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <form class="d-flex mx-auto w-100 px-lg-4" style="max-width: 500px;" asp-controller="Home" asp-action="Index" method="get">
+                        <div class="input-group">
+                            <input type="text" name="busca" class="form-control form-control-geek border-secondary" placeholder="Buscar loot (ex: Resident Evil)..." value="@ViewData["BuscaAtual"]">
+                            <button class="btn btn-outline-neon-cyan fw-bold px-4" type="submit"><i class="bi bi-search"></i></button>
+                        </div>
+                    </form>
+
+                    <ul class="navbar-nav align-items-center gap-2 mt-3 mt-lg-0">
                         @if (User.IsInRole("Admin") || User.IsInRole("Estoquista"))
                         {
-                            <li class="nav-item ms-2">
-                                <a class="nav-link text-neon-green text-uppercase fw-bold" style="letter-spacing: 1px;" href="/Admin/Estoque">
-                                    <i class="bi bi-boxes"></i> Armazém
-                                </a>
-                            </li>
+                            <li class="nav-item"><a class="nav-link text-neon-green fw-bold" href="/Admin/Estoque" title="Armazém"><i class="bi bi-boxes fs-5"></i></a></li>
                         }
-
                         @if (User.IsInRole("Admin") || User.IsInRole("Gerente"))
                         {
-                            <li class="nav-item ms-2">
-                                <a class="nav-link text-light text-uppercase fw-bold" style="letter-spacing: 1px;" href="/Admin/Dashboard">
-                                    <i class="bi bi-cpu text-neon-cyan"></i> Boss Room
-                                </a>
-                            </li>
-                            
-                            <li class="nav-item ms-2">
-                                <a class="nav-link text-neon-green text-uppercase fw-bold transition-hover" style="letter-spacing: 1px;" href="/Admin/Caixa">
-                                    <i class="bi bi-safe2"></i> Caixa
-                                </a>
-                            </li>
-                            
-                            <li class="nav-item ms-2">
-                                <a class="nav-link text-warning text-uppercase fw-bold transition-hover" style="letter-spacing: 1px;" href="/Admin/Auditoria">
-                                    <i class="bi bi-shield-lock"></i> Auditoria
-                                </a>
-                            </li>
+                            <li class="nav-item"><a class="nav-link text-light fw-bold" href="/Admin/Dashboard" title="Boss Room"><i class="bi bi-cpu text-neon-cyan fs-5"></i></a></li>
+                            <li class="nav-item"><a class="nav-link text-neon-green fw-bold" href="/Admin/Caixa" title="Caixa"><i class="bi bi-safe2 fs-5"></i></a></li>
+                            <li class="nav-item"><a class="nav-link text-warning fw-bold" href="/Admin/Auditoria" title="Auditoria"><i class="bi bi-shield-lock fs-5"></i></a></li>
                         }
-                    </ul>
-                    
-                    <ul class="navbar-nav align-items-center gap-3">
-                        <li class="nav-item">
+                        
+                        <li class="nav-item ms-lg-2">
                             <a asp-controller="Carrinho" asp-action="Index" class="btn btn-outline-secondary btn-sm text-light fw-bold position-relative d-flex align-items-center gap-2 px-3 py-2 border-secondary" style="font-family: 'Orbitron', sans-serif;">
                                 <i class="bi bi-cart3 fs-5 text-neon-cyan"></i> Cart
                                 @if (cartCount > 0)
                                 {
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-neon-cyan text-dark" style="font-size: 0.75rem;">
-                                        @cartCount
-                                        <span class="visually-hidden">itens no carrinho</span>
-                                    </span>
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-neon-cyan text-dark" style="font-size: 0.75rem;">@cartCount</span>
                                 }
                             </a>
                         </li>
@@ -93,24 +89,26 @@
                             var appUser = await UserManager.GetUserAsync(User);
                             var nomeParaExibir = !string.IsNullOrEmpty(appUser?.Apelido) ? appUser.Apelido : (appUser?.NomeCompleto?.Split(' ')[0] ?? "Player");
                             
-                            <li class="nav-item">
-                                <a href="/Perfil" class="text-decoration-none d-flex align-items-center border-start border-secondary ps-3 ms-2">
-                                    <img src="@(appUser?.FotoPerfilUrl ?? "/images/default-avatar.png")"
-                                         class="rounded-circle border border-neon-cyan shadow-sm"
-                                         style="width: 36px; height: 36px; object-fit: cover; padding: 2px;" />
-                                    <span class="text-light ms-2" style="font-family: 'Orbitron', sans-serif;">Olá, <strong class="text-neon-cyan">@nomeParaExibir</strong></span>
+                            <li class="nav-item dropdown ms-2">
+                                <a class="text-decoration-none d-flex align-items-center border-start border-secondary ps-3 dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                    <img src="@(appUser?.FotoPerfilUrl ?? "/images/default-avatar.png")" class="rounded-circle border border-neon-cyan" style="width: 36px; height: 36px; object-fit: cover;" />
                                 </a>
-                            </li>
-                            <li class="nav-item ms-2">
-                                <form asp-area="" asp-controller="Auth" asp-action="Logout" method="post" class="m-0">
-                                    <button type="submit" class="btn btn-neon-purple btn-sm px-3 py-2">Sair <i class="bi bi-power"></i></button>
-                                </form>
+                                <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end bg-darker-bg border-secondary shadow-lg mt-2">
+                                    <li><h6 class="dropdown-header text-neon-cyan fw-bold">Player: @nomeParaExibir</h6></li>
+                                    <li><a class="dropdown-item text-light transition-hover" href="/Perfil"><i class="bi bi-person-lines-fill me-2"></i> Meu Perfil</a></li>
+                                    <li><hr class="dropdown-divider border-secondary"></li>
+                                    <li>
+                                        <form asp-area="" asp-controller="Auth" asp-action="Logout" method="post" class="m-0 p-0 px-3 py-1">
+                                            <button type="submit" class="btn btn-sm btn-outline-danger w-100 fw-bold"><i class="bi bi-power"></i> Desconectar</button>
+                                        </form>
+                                    </li>
+                                </ul>
                             </li>
                         }
                         else
                         {
-                            <li class="nav-item ms-2">
-                                <a class="btn btn-neon-cyan btn-sm px-4 py-2" asp-controller="Auth" asp-action="Login">Acessar Sistema</a>
+                            <li class="nav-item ms-3">
+                                <a class="btn btn-neon-cyan btn-sm px-4 py-2 fw-bold text-uppercase" asp-controller="Auth" asp-action="Login">Acessar</a>
                             </li>
                         }
                     </ul>

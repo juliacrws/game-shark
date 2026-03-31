@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31903.59
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11513.90 insiders
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameShark.Domain", "GameShark.Domain\GameShark.Domain.csproj", "{6AA19B11-48AC-40C0-9342-01CF4781C4B7}"
 EndProject
@@ -12,6 +12,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameShark.Api", "GameShark.Api\GameShark.Api.csproj", "{6CF4F80F-AFA3-41FE-A7BD-229B5AC09295}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameShark.Web", "GameShark.Web\GameShark.Web.csproj", "{F7CEF22F-7F5B-4528-9125-D4C062841334}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{93D2E333-C74E-480A-B3CF-E82D3CABF723}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
