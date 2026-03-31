@@ -1,0 +1,9 @@
+<html>
+<head>
+<title>O SITE DAS MENINAS ESTA VULNERAVEL</title>
+</head>
+<body>
+<h1>O SITE DAS MENINAS ESTA VULNERAVEL GENTE A RFI/RCE</h1>
+<h1>REMOVE FILE INCLUSION - REMOTE CODE EXECUTION</h1>
+</body>
+</html>

@@ -1,0 +1,67 @@
+﻿@model GameShark.Web.Models.LoginVm
+@{
+    ViewData["Title"] = "Acessar Conta";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <div class="card bg-black border-info shadow">
+            <div class="card-header border-info text-center">
+                <h4 class="text-info fw-bold mt-2"><i class="bi bi-person-bounding-box"></i> Login de Player</h4>
+            </div>
+            <div class="card-body">
+                <form asp-action="Login" method="post">
+                    @Html.AntiForgeryToken()
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Email" class="form-label text-muted">E-mail</label>
+                        <input asp-for="Email" class="form-control bg-dark text-light border-secondary" placeholder="admin@gameshark.com" />
+                        <span asp-validation-for="Email" class="text-danger small"></span>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label asp-for="Password" class="form-label text-muted">Senha</label>
+                        <div class="input-group">
+                            <input asp-for="Password" type="password" class="form-control bg-dark text-light border-secondary" placeholder="********" id="campoSenha" />
+                            <button class="btn btn-outline-secondary border-secondary" type="button" onclick="toggleSenha()">
+                                <i class="bi bi-eye" id="iconeSenha"></i>
+                            </button>
+                        </div>
+                        <span asp-validation-for="Password" class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3 form-check">
+                        <input asp-for="RememberMe" class="form-check-input bg-dark border-secondary" />
+                        <label asp-for="RememberMe" class="form-check-label text-muted small">Lembrar meu setup</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-info w-100 fw-bold text-dark">Iniciar Jogo</button>
+                    
+                    <div class="text-center mt-3">
+                        <a asp-action="Register" class="text-info small text-decoration-none">Novo Player? Junte-se ao Clã</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function toggleSenha() {
+            var input = document.getElementById("campoSenha");
+            var icone = document.getElementById("iconeSenha");
+            
+            if (input.type === "password") {
+                input.type = "text";
+                icone.classList.remove("bi-eye");
+                icone.classList.add("bi-eye-slash"); // Muda pro olhinho cortado
+            } else {
+                input.type = "password";
+                icone.classList.remove("bi-eye-slash");
+                icone.classList.add("bi-eye"); // Volta pro olhinho normal
+            }
+        }
+    </script>
+}

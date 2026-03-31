@@ -1,0 +1,30 @@
+﻿@model GameShark.Domain.Entities.Produto
+@{
+    ViewData["Title"] = "Remover Loot";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 text-center">
+        <div class="card bg-black border-danger shadow-lg p-4">
+            <div class="card-body">
+                <i class="bi bi-trash3 text-danger display-3 mb-3"></i>
+                <h2 class="text-light">GAME OVER para este item?</h2>
+                <p class="text-muted fs-5">O loot <span class="text-info fw-bold">@Model.Nome</span> será deletado para sempre.</p>
+                
+                @if (!string.IsNullOrEmpty(Model.ImagemUrl))
+                {
+                    <div class="my-4">
+                        <img src="@Model.ImagemUrl" class="img-thumbnail bg-dark border-secondary" style="max-height: 150px;" />
+                    </div>
+                }
+
+                <form asp-action="Delete" method="post">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" asp-for="Id" />
+                    <button type="submit" class="btn btn-danger btn-lg px-5 fw-bold">CONFIRMAR EXCLUSÃO</button>
+                    <a asp-action="Index" class="btn btn-outline-light mt-3 d-block">CANCELAR</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

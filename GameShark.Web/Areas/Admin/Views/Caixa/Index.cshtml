@@ -1,0 +1,83 @@
+﻿@model GameShark.Web.Areas.Admin.Models.CaixaVm
+@{
+    ViewData["Title"] = "Controle de Caixa";
+}
+
+<div class="container-fluid mt-4 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-5">
+        <h2 class="text-neon-green fw-bold text-uppercase" style="font-family: 'Orbitron', sans-serif;">
+            <i class="bi bi-safe2"></i> Fluxo de Caixa
+        </h2>
+        <a href="/Admin/Dashboard" class="btn btn-outline-secondary btn-sm fw-bold">
+            <i class="bi bi-arrow-left"></i> Voltar à Boss Room
+        </a>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-md-4">
+            <div class="card bg-darker-bg border-secondary h-100 shadow">
+                <div class="card-body p-4 text-center">
+                    <h6 class="text-muted text-uppercase fw-bold mb-3" style="font-family: 'Orbitron', sans-serif;">Loot de Hoje</h6>
+                    <h2 class="text-light fw-bold">R$ @Model.FaturamentoHoje.ToString("N2")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-darker-bg border-neon-cyan h-100 shadow" style="border-width: 2px;">
+                <div class="card-body p-4 text-center">
+                    <h6 class="text-neon-cyan text-uppercase fw-bold mb-3" style="font-family: 'Orbitron', sans-serif;">Loot do Mês</h6>
+                    <h2 class="text-light fw-bold">R$ @Model.FaturamentoMes.ToString("N2")</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-darker-bg border-neon-green h-100 shadow" style="border-width: 2px;">
+                <div class="card-body p-4 text-center">
+                    <h6 class="text-neon-green text-uppercase fw-bold mb-3" style="font-family: 'Orbitron', sans-serif;">Faturamento Histórico</h6>
+                    <h2 class="text-neon-green fw-bold">R$ @Model.FaturamentoTotal.ToString("N2")</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h4 class="text-light fw-bold mb-3" style="font-family: 'Orbitron', sans-serif;">
+        <i class="bi bi-receipt"></i> Últimas Transações
+    </h4>
+    
+    <div class="card card-geek shadow-lg bg-darker-bg border-secondary border-1">
+        <div class="card-body p-0 overflow-hidden rounded">
+            <table class="table table-dark table-hover table-borderless align-middle mb-0">
+                <thead class="border-bottom border-neon-green text-uppercase text-muted" style="font-family: 'Orbitron', sans-serif; font-size: 0.85rem;">
+                    <tr class="bg-black">
+                        <th class="ps-4">Nº Pedido</th>
+                        <th>Data da Venda</th>
+                        <th>Status</th>
+                        <th class="pe-4 text-end">Valor R$</th>
+                    </tr>
+                </thead>
+                <tbody style="font-family: 'Rajdhani', sans-serif;">
+                    @if (Model.UltimasVendas.Any())
+                    {
+                        @foreach (var venda in Model.UltimasVendas)
+                        {
+                            <tr class="border-bottom border-secondary">
+                                <td class="ps-4 fw-bold text-neon-cyan">#@venda.Id.ToString("D4")</td>
+                                <td class="text-light">@venda.DataPedido.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td><span class="badge bg-neon-green text-dark fw-bold text-uppercase">@venda.Status</span></td>
+                                <td class="pe-4 text-end fs-5 fw-bold text-neon-green">R$ @venda.ValorTotal.ToString("N2")</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-muted font-monospace">
+                                Nenhuma transação registrada ainda.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

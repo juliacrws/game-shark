@@ -1,0 +1,27 @@
+﻿@model GameShark.Infrastructure.Entities.ApplicationUser
+@{ ViewData["Title"] = "Editar Player"; }
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-6">
+        <div class="card bg-black border-info shadow-lg">
+            <div class="card-header border-info text-info fw-bold">👥 Editar Perfil do Player</div>
+            <div class="card-body">
+                <form asp-action="Edit">
+                    <input type="hidden" asp-for="Id" />
+                    <div class="mb-3">
+                        <label class="form-label text-muted">Nome Completo</label>
+                        <input asp-for="NomeCompleto" class="form-control bg-dark text-light border-secondary" />
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label text-muted">E-mail (Login)</label>
+                        <input asp-for="Email" class="form-control bg-dark text-light border-secondary" />
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index" class="btn btn-outline-secondary">Voltar</a>
+                        <button type="submit" class="btn btn-info fw-bold text-dark">Atualizar Player</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

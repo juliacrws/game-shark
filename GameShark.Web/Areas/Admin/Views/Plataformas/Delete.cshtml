@@ -1,0 +1,23 @@
+﻿@model GameShark.Domain.Entities.Plataforma
+@{
+    ViewData["Title"] = "Delete Platform";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 text-center">
+        <div class="alert alert-danger bg-black border-danger p-5 shadow-lg">
+            <i class="bi bi-exclamation-octagon text-danger display-1"></i>
+            <h2 class="text-light mt-3">Delete from System?</h2>
+            <p class="text-muted">You are about to permanently delete this platform: <strong class="text-danger">@Model.Nome</strong></p>
+            
+            <form asp-action="Delete" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger btn-lg fw-bold px-5 mt-2">DELETE PERMANENTLY</button>
+                <div class="mt-4">
+                    <a asp-action="Index" class="btn btn-link text-muted">Cancel and go back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

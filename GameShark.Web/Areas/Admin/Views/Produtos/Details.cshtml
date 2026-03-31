@@ -1,0 +1,66 @@
+﻿@model GameShark.Domain.Entities.Produto
+@{
+    ViewData["Title"] = "Inspecionar Loot";
+}
+
+<div class="container mt-4 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-info fw-bold"><i class="bi bi-search"></i> Detalhes do Produto</h2>
+        <div>
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning fw-bold text-dark"><i class="bi bi-pencil"></i> Editar</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">Voltar</a>
+        </div>
+    </div>
+
+    <div class="card bg-black border-secondary shadow-lg">
+        <div class="row g-0">
+            <div class="col-md-4 p-4 border-end border-secondary d-flex align-items-center justify-content-center bg-dark bg-opacity-25">
+                @if (!string.IsNullOrEmpty(Model.ImagemUrl))
+                {
+                    <img src="@Model.ImagemUrl" class="img-fluid rounded shadow-sm" alt="@Model.Nome" style="max-height: 400px; object-fit: contain;">
+                }
+                else
+                {
+                    <i class="bi bi-image display-1 text-muted"></i>
+                }
+            </div>
+            <div class="col-md-8">
+                <div class="card-body p-4">
+                    <div class="row mb-4">
+                        <div class="col-sm-3 text-info fw-bold">Nome:</div>
+                        <div class="col-sm-9 text-light fs-5">@Model.Nome</div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-sm-3 text-info fw-bold">Preço:</div>
+                        <div class="col-sm-9 text-success fw-bold fs-5">R$ @Model.Preco.ToString("N2")</div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-sm-3 text-info fw-bold">Estoque:</div>
+                        <div class="col-sm-9">
+                            <span class="badge @(Model.Estoque > 0 ? "bg-success" : "bg-danger") fs-6">
+                                @Model.Estoque unidades
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-sm-3 text-info fw-bold">Categoria:</div>
+                        <div class="col-sm-9 text-light">@Model.Categoria?.Nome</div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-sm-3 text-info fw-bold">Plataforma:</div>
+                        <div class="col-sm-9 text-light">@Model.Plataforma?.Nome</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-3 text-info fw-bold">Lore / Descrição:</div>
+                        <div class="col-sm-9 text-muted" style="white-space: pre-wrap;">@Model.Descricao</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

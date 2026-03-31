@@ -1,0 +1,50 @@
+﻿@model GameShark.Web.Models.MudarSenhaVm
+@{
+    ViewData["Title"] = "System Config";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card card-geek shadow-lg border-secondary">
+                <div class="card-header bg-darker-bg border-bottom border-secondary p-4 text-center">
+                    <h3 class="text-light fw-bold mb-0" style="font-family: 'Orbitron', sans-serif;">
+                        <i class="bi bi-shield-lock text-neon-cyan"></i> Protocolo de Segurança
+                    </h3>
+                    <p class="text-muted small mt-2">Atualize sua credencial de acesso (Senha)</p>
+                </div>
+                
+                <div class="card-body p-5 bg-black">
+                    <form asp-action="Configuracoes" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3 fw-bold"></div>
+
+                        <div class="mb-4">
+                            <label asp-for="SenhaAtual" class="label-geek mb-2">Senha Atual</label>
+                            <input asp-for="SenhaAtual" class="form-control form-control-geek py-3" placeholder="Digite a senha antiga" />
+                            <span asp-validation-for="SenhaAtual" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="NovaSenha" class="label-geek mb-2 text-neon-cyan">Nova Senha</label>
+                            <input asp-for="NovaSenha" class="form-control form-control-geek py-3" placeholder="Defina a nova credencial" />
+                            <span asp-validation-for="NovaSenha" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-5">
+                            <label asp-for="ConfirmarSenha" class="label-geek mb-2 text-neon-cyan">Confirmar Nova Senha</label>
+                            <input asp-for="ConfirmarSenha" class="form-control form-control-geek py-3" placeholder="Repita a nova credencial" />
+                            <span asp-validation-for="ConfirmarSenha" class="text-danger small"></span>
+                        </div>
+
+                        <div class="d-grid gap-3">
+                            <button type="submit" class="btn btn-neon-cyan btn-lg py-3">
+                                <i class="bi bi-check-circle"></i> ATUALIZAR CREDENCIAL
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary">Voltar ao Perfil</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

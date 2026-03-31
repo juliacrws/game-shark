@@ -1,0 +1,79 @@
+﻿@model GameShark.Web.Areas.Admin.Models.ProdutoEditVm
+@{
+    ViewData["Title"] = "Cadastrar Novo Loot";
+}
+
+<div class="container mt-4 mb-5">
+    <h2 class="text-info fw-bold mb-4"><i class="bi bi-plus-square"></i> Adicionar ao Arsenal</h2>
+    
+    <div class="card bg-black border-info shadow-lg">
+        <div class="card-body p-4">
+            <form asp-action="Create" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="Nome" class="label-geek">Nome do Jogo</label>
+                        <input asp-for="Nome" class="form-control form-control-geek" />
+                        <span asp-validation-for="Nome" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="Preco" class="form-label text-warning fw-bold">Preço (R$)</label>
+                        <input asp-for="Preco" type="text" class="form-control bg-dark text-light border-secondary" placeholder="0,00" />
+                        <span asp-validation-for="Preco" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label asp-for="Estoque" class="form-label text-warning fw-bold">Qtd. Estoque</label>
+                        <input asp-for="Estoque" type="number" class="form-control bg-dark text-light border-secondary" value="1" />
+                        <span asp-validation-for="Estoque" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Descricao" class="form-label text-warning fw-bold">Descrição (Lore do Jogo)</label>
+                    <textarea asp-for="Descricao" class="form-control bg-dark text-light border-secondary" rows="5" placeholder="Digite todos os detalhes e especificações do jogo aqui..."></textarea>
+                    <span asp-validation-for="Descricao" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="CategoriaId" class="form-label text-warning fw-bold">Categoria</label>
+                        <select asp-for="CategoriaId" class="form-select bg-dark text-light border-secondary" asp-items="ViewBag.CategoriaId">
+                            <option value="">-- Escolha uma Categoria --</option>
+                        </select>
+                        <span asp-validation-for="CategoriaId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="PlataformaId" class="form-label text-warning fw-bold">Plataforma</label>
+                        <select asp-for="PlataformaId" class="form-select bg-dark text-light border-secondary" asp-items="ViewBag.PlataformaId">
+                            <option value="">-- Escolha a Plataforma --</option>
+                        </select>
+                        <span asp-validation-for="PlataformaId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="Classificacao" class="form-label text-warning fw-bold">Faixa Etária</label>
+                        <select asp-for="Classificacao" class="form-select bg-dark text-light border-secondary" asp-items="ViewBag.Classificacoes">
+                            <option value="">-- Idade Mínima --</option>
+                        </select>
+                        <span asp-validation-for="Classificacao" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label asp-for="Capa" class="form-label text-warning fw-bold">Upload da Capa</label>
+                    <input asp-for="Capa" type="file" class="form-control bg-dark text-light border-secondary" accept="image/*" required />
+                    <span asp-validation-for="Capa" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between mt-4 border-top border-secondary pt-4">
+                    <a asp-action="Index" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Cancelar</a>
+                    <button type="submit" class="btn btn-info fw-bold text-dark px-5"><i class="bi bi-plus-circle"></i> Cadastrar Jogo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

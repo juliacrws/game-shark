@@ -1,0 +1,93 @@
+﻿@model IEnumerable<GameShark.Domain.Entities.Pedido>
+@{
+    ViewData["Title"] = "O Teu Histórico de Quests completadas";
+}
+
+<div class="container mt-4 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom-1 border-neon-purple pb-3">
+        <h2 class="text-light fw-bold text-uppercase" style="font-family: 'Orbitron', sans-serif;"><i class="bi bi-box2-heart"></i> Histórico de Loot Securado</h2>
+        <a asp-controller="Perfil" asp-action="Index" class="btn btn-outline-secondary btn-sm text-uppercasefw-bold" style="font-family: 'Orbitron', sans-serif;">Voltar ao Perfil</a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        foreach (var pedido in Model)
+        {
+            <div class="card h-100 card-geek shadow-lg product-card position-relative overflow-hidden mb-5">
+                
+                <div class="card-header bg-darker-bg border-bottom-1 border-secondary d-flex justify-content-between align-items-center py-3">
+                    <div>
+                        <span class="text-muted small d-block text-uppercase fw-bold" style="font-family: 'Orbitron', sans-serif;">Pedido Registado a:</span>
+                        <span class="text-light fw-bold fs-5" style="font-family: 'Rajdhani', sans-serif;">@pedido.DataPedido.ToString("dd/MM/yyyy HH:mm")</span>
+                    </div>
+                    <div>
+                        <span class="text-muted small d-block text-uppercase fw-bold" style="font-family: 'Orbitron', sans-serif;">Total Securado:</span>
+                        <span class="text-neon-green fw-bold fs-5" style="font-family: 'Rajdhani', sans-serif;">R$ @pedido.ValorTotal.ToString("N2")</span>
+                    </div>
+                    <div>
+                        <span class="text-muted small d-block text-uppercase fw-bold" style="font-family: 'Orbitron', sans-serif;">ID do Pedido:</span>
+                        <span class="text-neon-purple fw-bold fs-5" style="font-family: 'Rajdhani', sans-serif;">#GS-@pedido.Id.ToString("D4")</span>
+                    </div>
+                    <div class="text-end">
+                        <span class="text-muted small d-block text-uppercase fw-bold mb-1" style="font-family: 'Orbitron', sans-serif;">Status:</span>
+                        <span class="badge @(pedido.Status == "Aprovado" ? "bg-neon-green text-dark" : "bg-neon-cyan text-dark") fs-6 text-uppercase fw-bold" style="font-family: 'Orbitron', sans-serif;">
+                            <i class="bi bi-shield-check"></i> @pedido.Status
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-body p-0">
+                    <table class="table table-dark table-striped table-borderless mb-0 table-align-middle">
+                        <tbody>
+                            @foreach (var item in pedido.Itens)
+                            {
+                                <tr class="border-bottom-1 border-secondary">
+                                    <td class="p-3" style="width: 80px;">
+                                        @if (!string.IsNullOrEmpty(item.Produto?.ImagemUrl))
+                                        {
+                                            <img src="@item.Produto.ImagemUrl" class="rounded border border-secondary shadow-sm" style="width: 60px; height: 60px; object-fit: cover;" alt="@item.Produto.Nome" />
+                                        }
+                                        else
+                                        {
+                                            <div class="bg-secondary rounded d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                                <i class="bi bi-image text-muted"></i>
+                                            </div>
+                                        }
+                                    </td>
+                                    <td class="p-3 align-middle" style="font-family: 'Rajdhani', sans-serif;">
+                                        <h6 class="text-light mb-1 fw-bold fs-5 text-uppercase">@item.Produto?.Nome</h6>
+                                        <span class="text-muted small fs-6">Qtd: @item.Quantidade x R$ @item.PrecoUnitario.ToString("N2")</span>
+                                    </td>
+                                    <td class="p-3 align-middle text-end">
+                                        <a href="/Home/Details/@item.ProdutoId" class="btn btn-outline-info btn-sm text-uppercasefw-bold" style="font-family: 'Orbitron', sans-serif;">Inspecionar Jogo</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="text-center py-5 bg-black border border-secondary rounded-geek mt-4">
+            <h4 class="text-muted mb-3"><i class="bi bi-box-seam display-1 d-block mb-3"></i>Sem histórico de Quests completadas</h4>
+            <p class="text-muted fs-5">Ainda não adquiriste nenhum loot. Começa o teu inventário!</p>
+            <a href="/Home" class="btn btn-neon-cyan mt-3 btn-lg fw-bold text-uppercase">Começar Quests</a>
+        </div>
+    }
+</div>
+
+<style>
+    /* Estilos específicos */
+    .bg-darker-bg { background-color: var(--darker-bg); }
+    .text-neon-green { color: var(--neon-green); }
+    .text-neon-purple { color: var(--neon-purple); text-shadow: 0 0 10px rgba(188, 19, 254, 0.5); }
+    .bg-neon-green { background-color: var(--neon-green); }
+    .bg-neon-cyan { background-color: var(--neon-cyan); }
+    .rounded-geek { border-radius: 8px; }
+    .border-bottom-1 { border-bottom: 1px solid !important; }
+    .border-neon-purple { border-color: var(--neon-purple) !important; border-width: 2px !important; }
+    .table-align-middle td { vertical-align: middle; }
+</style>

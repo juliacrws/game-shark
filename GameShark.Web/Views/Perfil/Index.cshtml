@@ -1,0 +1,124 @@
+﻿@model GameShark.Infrastructure.Entities.ApplicationUser
+@{
+    ViewData["Title"] = "Ficha do Player";
+    // Lógica para decidir qual nome exibir no topo
+    var displayNick = string.IsNullOrEmpty(Model.Apelido) ? Model.NomeCompleto : Model.Apelido;
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            <div class="card card-geek shadow-lg overflow-hidden">
+                <div class="card-body p-0">
+                    
+                    <div class="p-5 text-center border-bottom border-secondary bg-darker-bg">
+                        <div class="position-relative d-inline-block mb-4">
+                            <div class="position-absolute translate-middle top-50 start-50 rounded-circle"
+                                 style="width: 180px; height: 180px; background: var(--neon-purple); opacity: 0.15; filter: blur(30px);"></div>
+                            
+                            <img src="@(Model.FotoPerfilUrl ?? "/images/default-avatar.png")"
+                                 class="rounded-circle border border-3 border-neon-cyan p-1"
+                                 style="width: 160px; height: 160px; object-fit: cover;" />
+                            
+                            <form asp-action="AtualizarFoto" method="post" enctype="multipart/form-data" class="mt-3">
+                                <label for="upload-foto" class="btn btn-sm btn-neon-cyan py-1 px-3" style="font-size: 0.65rem;">
+                                    <i class="bi bi-camera"></i> ALTERAR AVATAR
+                                </label>
+                                <input type="file" id="upload-foto" name="foto" hidden onchange="this.form.submit()" />
+                            </form>
+                        </div>
+
+                        <h1 class="display-5 fw-black text-neon-cyan mb-0" style="text-shadow: 0 0 15px rgba(0, 243, 255, 0.4);">
+                            @displayNick
+                        </h1>
+                        @if (!string.IsNullOrEmpty(Model.Apelido))
+                        {
+                            <p class="text-muted small text-uppercase fw-bold mt-1" style="font-family: 'Orbitron'; letter-spacing: 2px;">
+                                [ @Model.NomeCompleto ]
+                            </p>
+                        }
+                        
+                        <div class="row justify-content-center mt-3">
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between small text-uppercase mb-1" style="font-family: 'Orbitron'; font-size: 0.7rem;">
+                                    <span class="text-neon-cyan">Level: Explorer</span>
+                                    <span class="text-muted">750 / 1000 XP</span>
+                                </div>
+                                <div class="xp-container">
+                                    <div class="xp-bar"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 bg-black">
+                        <div class="row g-3">
+                            <div class="col-6 col-md-3">
+                                <div class="stat-box">
+                                    <span class="stat-label">Loot Total</span>
+                                    <span class="stat-value text-neon-green">R$ 1.250,00</span>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="stat-box">
+                                    <span class="stat-label">Quests</span>
+                                    <span class="stat-value">12</span>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="stat-box">
+                                    <span class="stat-label">Rank</span>
+                                    <span class="stat-value">#402</span>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="stat-box">
+                                    <span class="stat-label">Conquistas</span>
+                                    <span class="stat-value"><i class="bi bi-trophy text-warning"></i> 05</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-5 border-top border-secondary">
+                        <div class="row">
+                            <div class="col-12 mb-5">
+                                <form asp-action="AtualizarPerfil" method="post">
+                                    <label class="label-geek d-block mb-2">Definir Codinome (Nickname)</label>
+                                    <div class="input-group">
+                                        <input name="nuevoApelido" value="@Model.Apelido" class="form-control form-control-geek" placeholder="Como quer ser chamado nas Quests?" />
+                                        <button type="submit" class="btn btn-neon-cyan px-4">SALVAR NICK</button>
+                                    </div>
+                                    <small class="text-muted mt-2 d-block">Este nome aparecerá no HUD principal e na Navbar.</small>
+                                </form>
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+                                <label class="label-geek d-block mb-2">ID do Jogador (E-mail)</label>
+                                <div class="p-3 bg-dark border border-secondary rounded fw-bold text-light" style="opacity: 0.8; font-family: 'Rajdhani';">
+                                    @Model.Email
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label class="label-geek d-block mb-2">Username do Sistema</label>
+                                <div class="p-3 bg-dark border border-secondary rounded fw-bold text-light" style="opacity: 0.8; font-family: 'Rajdhani';">
+                                    @Model.UserName
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-3 d-md-flex justify-content-md-center mt-5 pt-4 border-top border-secondary">
+                            <a asp-controller="Pedidos" asp-action="Index" class="btn btn-neon-purple px-5 py-3">
+                                <i class="bi bi-box2-heart"></i> MEU HISTÓRICO DE LOOT
+                            </a>
+                            <a asp-controller="Perfil" asp-action="Configuracoes" class="btn btn-outline-secondary px-5 py-3 fw-bold" style="font-family: 'Orbitron'; font-size: 0.8rem;">
+                                <i class="bi bi-gear"></i> CONFIGURAÇÕES DE CONTA
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

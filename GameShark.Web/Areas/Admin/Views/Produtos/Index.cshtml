@@ -1,0 +1,58 @@
+﻿@model IEnumerable<GameShark.Domain.Entities.Produto>
+@{
+    ViewData["Title"] = "Gestão de Produtos";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+    <h2 class="text-info fw-bold"><i class="bi bi-box-seam"></i> Arsenal da Game Shark</h2>
+    <div>
+        <a href="/Admin/Manage" class="btn btn-outline-secondary me-2"><i class="bi bi-arrow-left"></i> Voltar ao Painel</a>
+        <a href="/Admin/Produtos/Create" class="btn btn-info fw-bold text-dark"><i class="bi bi-plus-lg"></i> Novo Loot</a>
+    </div>
+</div>
+    <table class="table table-geek align-middle">
+        <thead class="bg-black text-info">
+            <tr>
+                <th scope="col" style="width: 80px;">Capa</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Plataforma/Cat</th>
+                <th scope="col">Estoque</th>
+                <th scope="col">Preço</th>
+                <th scope="col" class="text-end">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.ImagemUrl))
+                        {
+                            <img src="@item.ImagemUrl" class="img-thumbnail bg-dark border-secondary" style="width: 50px; height: 50px; object-fit: cover;" />
+                        }
+                        else
+                        {
+                            <div class="bg-secondary rounded d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;"><i class="bi bi-image"></i></div>
+                        }
+                    </td>
+                    <td class="fw-bold">@item.Nome</td>
+                    <td>
+                        <span class="badge bg-info text-dark">@item.Plataforma?.Nome</span>
+                        <span class="badge bg-secondary">@item.Categoria?.Nome</span>
+                    </td>
+                    <td>@(item.Estoque > 0 ? item.Estoque.ToString() : "Esgotado")</td>
+                    <td class="text-success fw-bold">R$ @item.Preco.ToString("N2")</td>
+                    <td class="text-end">
+                        <a href="/Admin/Produtos/Details/@item.Id" class="btn btn-sm btn-outline-light" title="Ver Vitrine"><i class="bi bi-eye"></i></a>
+                        <a href="/Admin/Produtos/Edit/@item.Id" class="btn btn-sm btn-outline-warning" title="Editar"><i class="bi bi-pencil"></i></a>
+                        
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a href="/Admin/Produtos/Delete/@item.Id" class="btn btn-sm btn-outline-danger" title="Deletar Loot"><i class="bi bi-trash"></i></a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

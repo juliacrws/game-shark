@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Gestão da Loja";
+}
+
+<h2 class="text-warning fw-bold mb-4">
+    <i class="bi bi-gear"></i> Central de Gestão
+</h2>
+
+<div class="list-group bg-black shadow">
+    <a asp-area="Admin" asp-controller="Produtos" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+        <i class="bi bi-controller"></i> Gerenciar Loot (Produtos)
+    </a>
+    <a asp-area="Admin" asp-controller="Categorias" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+        <i class="bi bi-tags"></i> Gerenciar Categorias
+    </a>
+    <a asp-area="Admin" asp-controller="Plataformas" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+        <i class="bi bi-joystick"></i> Gerenciar Plataformas
+    </a>
+    <a asp-area="Admin" asp-controller="Usuarios" asp-action="Index" class="list-group-item list-group-item-action bg-dark text-light border-secondary">
+        <i class="bi bi-people"></i> Gerenciar Usuários (Players)
+    </a>
+</div>
+
+<a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" class="btn btn-outline-info mt-4">
+    <i class="bi bi-arrow-left"></i> Voltar ao Dashboard
+</a>

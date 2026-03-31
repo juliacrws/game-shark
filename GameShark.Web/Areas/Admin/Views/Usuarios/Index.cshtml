@@ -1,0 +1,38 @@
+﻿@model IEnumerable<GameShark.Infrastructure.Entities.ApplicationUser>
+@{
+    ViewData["Title"] = "Roster de Players";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+    <h2 class="text-info fw-bold"><i class="bi bi-people-fill"></i> Players Cadastrados</h2>
+    <a href="/Admin/Manage" class="btn btn-outline-secondary"><i class="bi bi-arrow-left"></i> Voltar ao Painel</a>
+</div>
+
+<div class="table-responsive shadow-lg rounded">
+    <table class="table table-dark table-hover align-middle border-secondary">
+        <thead class="bg-black text-info">
+            <tr>
+                <th><i class="bi bi-person-badge"></i> Player</th>
+                <th><i class="bi bi-envelope-at"></i> Contato</th>
+                <th><i class="bi bi-shield-check"></i> Status</th>
+                <th class="text-end">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td class="fw-bold text-light">@user.NomeCompleto</td>
+                    <td class="text-muted">@user.Email</td>
+                    <td>
+                        <span class="badge bg-success text-dark"><i class="bi bi-check-circle"></i> Ativo</span>
+                    </td>
+                    <td class="text-end">
+                        <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-outline-info" title="Editar Perfil"><i class="bi bi-pencil"></i></a>
+                        <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-outline-danger" title="Banir Player"><i class="bi bi-hammer"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

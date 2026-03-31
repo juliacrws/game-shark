@@ -1,0 +1,6 @@
+@GameShark.Api_HostAddress = http://localhost:5273
+
+GET {{GameShark.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

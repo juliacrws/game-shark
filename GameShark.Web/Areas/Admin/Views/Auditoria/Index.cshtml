@@ -1,0 +1,60 @@
+﻿@model IEnumerable<GameShark.Domain.Entities.LogAcesso>
+@{
+    ViewData["Title"] = "Registro de Acessos";
+}
+
+<div class="container-fluid mt-4 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-3">
+        <h2 class="text-warning fw-bold text-uppercase" style="font-family: 'Orbitron', sans-serif;">
+            <i class="bi bi-shield-lock"></i> Log de Segurança
+        </h2>
+        <a href="/Admin/Dashboard" class="btn btn-outline-secondary btn-sm fw-bold">
+            <i class="bi bi-arrow-left"></i> Voltar à Boss Room
+        </a>
+    </div>
+
+    <div class="card card-geek shadow-lg bg-darker-bg border-secondary border-1">
+        <div class="card-body p-0 overflow-hidden rounded">
+            <table class="table table-dark table-hover table-borderless align-middle mb-0">
+                <thead class="border-bottom border-warning text-uppercase text-muted" style="font-family: 'Orbitron', sans-serif; font-size: 0.85rem;">
+                    <tr class="bg-black">
+                        <th class="ps-4">Data e Hora</th>
+                        <th>E-mail Rastreado</th>
+                        <th>Status do Acesso</th>
+                        <th class="pe-4 text-end">IP de Origem</th>
+                    </tr>
+                </thead>
+                <tbody style="font-family: 'Rajdhani', sans-serif;">
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var log in Model)
+                        {
+                            string statusCor = log.Sucesso ? "text-neon-green" : "text-danger";
+                            string statusIcon = log.Sucesso ? "bi-check-circle-fill" : "bi-x-octagon-fill";
+                            string statusTexto = log.Sucesso ? "Acesso Autorizado" : "Falha de Autenticação";
+
+                            <tr class="border-bottom border-secondary">
+                                <td class="ps-4 text-light">@log.DataHora.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                                <td class="fw-bold text-light">@log.EmailTentativa</td>
+                                <td>
+                                    <span class="@statusCor fw-bold text-uppercase" style="letter-spacing: 1px;">
+                                        <i class="bi @statusIcon"></i> @statusTexto
+                                    </span>
+                                </td>
+                                <td class="pe-4 text-end text-muted font-monospace">@log.IpAddress</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center py-4 text-muted font-monospace">
+                                Nenhum registro de acesso encontrado ainda.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

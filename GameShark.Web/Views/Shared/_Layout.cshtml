@@ -1,0 +1,155 @@
+﻿@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+@inject GameShark.Infrastructure.Persistence.AppDbContext DbContext
+@inject Microsoft.AspNetCore.Identity.UserManager<GameShark.Infrastructure.Entities.ApplicationUser> UserManager
+@{
+    int cartCount = 0;
+    // Se estiver logado, vai lá no banco e conta quantos itens o usuário tem
+    if (User.Identity?.IsAuthenticated == true)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId != null)
+        {
+            cartCount = DbContext.CarrinhoItems.Where(c => c.UsuarioId == userId).Sum(c => c.Quantidade);
+        }
+    }
+}
+<!DOCTYPE html>
+<html lang="pt-BR" data-bs-theme="dark">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - GameShark</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <link rel="icon" type="image/png" href="~/images/favicon.png" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-dark navbar-geek mb-4 py-3 sticky-top">
+            <div class="container">
+                <a class="navbar-brand text-neon-cyan fw-bold d-flex align-items-center gap-2 logo-cyber" asp-area="" asp-controller="Home" asp-action="Index" style="letter-spacing: 2px;">
+                    <img src="~/images/favicon.png" alt="Logo GameShark" style="width: 32px; height: 32px;" class="rounded" />
+                    GAMESHARK
+                </a>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1 align-items-center ms-3">
+                        <li class="nav-item">
+                            <a class="nav-link text-uppercase" style="letter-spacing: 1px;" asp-area="" asp-controller="Home" asp-action="Index">Catálogo</a>
+                        </li>
+                
+                        @if (User.IsInRole("Admin") || User.IsInRole("Estoquista"))
+                        {
+                            <li class="nav-item ms-2">
+                                <a class="nav-link text-neon-green text-uppercase fw-bold" style="letter-spacing: 1px;" href="/Admin/Estoque">
+                                    <i class="bi bi-boxes"></i> Armazém
+                                </a>
+                            </li>
+                        }
+
+                        @if (User.IsInRole("Admin") || User.IsInRole("Gerente"))
+                        {
+                            <li class="nav-item ms-2">
+                                <a class="nav-link text-light text-uppercase fw-bold" style="letter-spacing: 1px;" href="/Admin/Dashboard">
+                                    <i class="bi bi-cpu text-neon-cyan"></i> Boss Room
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item ms-2">
+                                <a class="nav-link text-neon-green text-uppercase fw-bold transition-hover" style="letter-spacing: 1px;" href="/Admin/Caixa">
+                                    <i class="bi bi-safe2"></i> Caixa
+                                </a>
+                            </li>
+                            
+                            <li class="nav-item ms-2">
+                                <a class="nav-link text-warning text-uppercase fw-bold transition-hover" style="letter-spacing: 1px;" href="/Admin/Auditoria">
+                                    <i class="bi bi-shield-lock"></i> Auditoria
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                    
+                    <ul class="navbar-nav align-items-center gap-3">
+                        <li class="nav-item">
+                            <a asp-controller="Carrinho" asp-action="Index" class="btn btn-outline-secondary btn-sm text-light fw-bold position-relative d-flex align-items-center gap-2 px-3 py-2 border-secondary" style="font-family: 'Orbitron', sans-serif;">
+                                <i class="bi bi-cart3 fs-5 text-neon-cyan"></i> Cart
+                                @if (cartCount > 0)
+                                {
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-neon-cyan text-dark" style="font-size: 0.75rem;">
+                                        @cartCount
+                                        <span class="visually-hidden">itens no carrinho</span>
+                                    </span>
+                                }
+                            </a>
+                        </li>
+
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            var appUser = await UserManager.GetUserAsync(User);
+                            var nomeParaExibir = !string.IsNullOrEmpty(appUser?.Apelido) ? appUser.Apelido : (appUser?.NomeCompleto?.Split(' ')[0] ?? "Player");
+                            
+                            <li class="nav-item">
+                                <a href="/Perfil" class="text-decoration-none d-flex align-items-center border-start border-secondary ps-3 ms-2">
+                                    <img src="@(appUser?.FotoPerfilUrl ?? "/images/default-avatar.png")"
+                                         class="rounded-circle border border-neon-cyan shadow-sm"
+                                         style="width: 36px; height: 36px; object-fit: cover; padding: 2px;" />
+                                    <span class="text-light ms-2" style="font-family: 'Orbitron', sans-serif;">Olá, <strong class="text-neon-cyan">@nomeParaExibir</strong></span>
+                                </a>
+                            </li>
+                            <li class="nav-item ms-2">
+                                <form asp-area="" asp-controller="Auth" asp-action="Logout" method="post" class="m-0">
+                                    <button type="submit" class="btn btn-neon-purple btn-sm px-3 py-2">Sair <i class="bi bi-power"></i></button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item ms-2">
+                                <a class="btn btn-neon-cyan btn-sm px-4 py-2" asp-controller="Auth" asp-action="Login">Acessar Sistema</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="toast-container position-fixed bottom-0 end-0 p-4" style="z-index: 10000;">
+            <div id="geekToast" class="toast align-items-center bg-darker-bg border-neon-cyan shadow-lg" role="alert" aria-live="assertive" aria-atomic="true" style="border-width: 2px;">
+                <div class="d-flex">
+                    <div class="toast-body text-neon-cyan fw-bold fs-6" style="font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">
+                        <i class="bi bi-check2-square me-2 fs-5"></i> @TempData["MensagemSucesso"]
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+            var toastEl = document.getElementById('geekToast');
+            if(toastEl) {
+            var toast = new bootstrap.Toast(toastEl, { delay: 4000 });
+            toast.show();
+            }
+            });
+        </script>
+    }
+</body>
+</html>

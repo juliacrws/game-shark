@@ -1,0 +1,73 @@
+﻿@model GameShark.Web.Areas.Admin.Services.DashboardDto
+@{
+    ViewData["Title"] = "Dashboard Admin";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+    <h2 class="text-info fw-bold"><i class="bi bi-speedometer2"></i> Painel de Comando</h2>
+    <a href="/Admin/Manage" class="btn btn-outline-warning">Gerenciar Loja</a>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-black border-info text-center shadow">
+            <div class="card card-geek border-neon-cyan text-center p-3">
+                <h6 class="text-muted text-uppercase">Arsenal</h6>
+                <h2 class="text-neon-cyan fw-bold">@Model.TotalProdutos</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-black border-warning text-center shadow">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Players Registrados</h5>
+                <h2 class="text-warning fw-bold">@Model.TotalUsuarios</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-black border-success text-center shadow">
+            <div class="card-body">
+                <h5 class="card-title text-muted">Categorias Ativas</h5>
+                <h2 class="text-success fw-bold">@Model.TotalCategorias</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card bg-black border-secondary h-100">
+            <div class="card-header border-secondary text-light">Por Categoria</div>
+            <div class="card-body"><canvas id="chartCategorias"></canvas></div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card bg-black border-secondary h-100">
+            <div class="card-header border-secondary text-light">Por Plataforma</div>
+            <div class="card-body"><canvas id="chartPlataformas"></canvas></div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card bg-black border-secondary h-100">
+            <div class="card-header border-secondary text-light">Últimos Adicionados</div>
+            <ul class="list-group list-group-flush bg-transparent">
+                @foreach (var p in Model.UltimosProdutos)
+                {
+                    <li class="list-group-item bg-black text-light border-secondary"><i class="bi bi-check2-circle text-success"></i> @p</li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="~/js/dashboard.js"></script>
+    <script>
+        // Passando os dados do C# para o JavaScript!
+        const catData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ProdutosPorCategoria));
+        const platData = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ProdutosPorPlataforma));
+        renderCharts(catData, platData);
+    </script>
+}

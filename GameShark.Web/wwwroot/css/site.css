@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap');
+
+:root {
+    --neon-green: #39ff14;
+    --neon-purple: #bc13fe;
+    --neon-cyan: #00f3ff;
+    --dark-bg: #08080a;
+    --darker-bg: #030304;
+    --card-bg: rgba(15, 15, 18, 0.85);
+    --border-rgba: rgba(255, 255, 255, 0.05);
+}
+
+/* --- Base & Layout --- */
+html {
+    font-size: 16px;
+    position: relative;
+    min-height: 100%;
+    scroll-behavior: smooth; /* Adicionado para descer suavemente na Home */
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: var(--dark-bg);
+    background-image: radial-gradient(circle at 15% 50%, rgba(188, 19, 254, 0.05) 0%, transparent 50%), radial-gradient(circle at 85% 30%, rgba(0, 243, 255, 0.05) 0%, transparent 50%);
+    font-family: 'Rajdhani', sans-serif;
+    color: #e0e6ed;
+    -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, .navbar-brand {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+/* --- Utilitários de Cores --- */
+.text-neon-cyan {
+    color: var(--neon-cyan) !important;
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+}
+
+.text-neon-green {
+    color: var(--neon-green) !important;
+}
+
+.text-neon-purple {
+    color: var(--neon-purple) !important;
+}
+
+.border-neon-cyan {
+    border-color: var(--neon-cyan) !important;
+}
+
+.border-neon-purple {
+    border-color: var(--neon-purple) !important;
+}
+
+.bg-darker-bg {
+    background-color: var(--darker-bg, #0a0a0f);
+}
+
+.bg-black {
+    background-color: #000000;
+}
+
+/* --- Botões Neon --- */
+.btn-neon-cyan, .btn-neon-purple, .btn-neon-green {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border-radius: 4px;
+}
+
+.btn-neon-cyan {
+    background: rgba(0, 243, 255, 0.05);
+    color: var(--neon-cyan);
+    border: 1px solid var(--neon-cyan);
+}
+
+    .btn-neon-cyan:hover {
+        background: var(--neon-cyan);
+        color: #000;
+        box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+        transform: translateY(-2px);
+    }
+
+.btn-neon-purple {
+    background: rgba(188, 19, 254, 0.05);
+    color: var(--neon-purple);
+    border: 1px solid var(--neon-purple);
+}
+
+    .btn-neon-purple:hover {
+        background: var(--neon-purple);
+        color: #fff;
+        box-shadow: 0 0 20px rgba(188, 19, 254, 0.5);
+        transform: translateY(-2px);
+    }
+
+.btn-neon-green {
+    background-color: var(--neon-green, #39ff14);
+    color: #000;
+    border: none;
+}
+
+    .btn-neon-green:hover {
+        background-color: #32e612;
+        box-shadow: 0 0 15px rgba(57, 255, 20, 0.6);
+        transform: translateY(-2px);
+    }
+
+.btn-outline-neon-cyan {
+    color: var(--neon-cyan);
+    border-color: var(--neon-cyan);
+}
+
+    .btn-outline-neon-cyan:hover {
+        background-color: var(--neon-cyan);
+        color: #000;
+        box-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+    }
+
+/* --- Cards & Vidro (Glassmorphism) --- */
+.card-geek {
+    background-color: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-rgba);
+    border-radius: 12px;
+    transition: all 0.4s ease;
+}
+
+    .card-geek:hover {
+        border-color: rgba(0, 243, 255, 0.3);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+    }
+
+/* Efeito vitrine e botões redondos de carrinho */
+.cyber-card {
+    transition: all 0.3s ease-in-out;
+}
+
+    .cyber-card:hover {
+        border-color: var(--neon-cyan) !important;
+        box-shadow: 0 10px 20px rgba(0, 243, 255, 0.15) !important;
+        transform: translateY(-5px);
+    }
+
+.cyber-buy-btn {
+    transition: all 0.3s ease;
+}
+
+    .cyber-buy-btn:hover {
+        background-color: var(--neon-cyan);
+        color: #000 !important;
+        transform: scale(1.1) rotate(-5deg);
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.6);
+    }
+
+/* --- Tabelas & Forms --- */
+.table-geek {
+    color: #e0e6ed !important;
+    background: transparent !important;
+}
+
+    .table-geek thead th {
+        font-family: 'Orbitron', sans-serif;
+        color: var(--neon-cyan);
+        border-bottom: 2px solid var(--neon-cyan) !important;
+        background: rgba(0, 0, 0, 0.3);
+        font-size: 0.85rem;
+    }
+
+    .table-geek tbody tr {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+        .table-geek tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02) !important;
+        }
+
+.form-control-geek {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    color: var(--neon-cyan) !important;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 600;
+}
+
+    .form-control-geek:focus {
+        border-color: var(--neon-cyan) !important;
+        box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+        background: rgba(0, 0, 0, 0.6) !important;
+    }
+
+label.label-geek {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.75rem;
+    color: #888;
+    text-transform: uppercase;
+}
+
+/* --- Barra de XP & Stats --- */
+.xp-container {
+    background: rgba(255, 255, 255, 0.05);
+    height: 10px;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 243, 255, 0.2);
+}
+
+.xp-bar {
+    background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple));
+    height: 100%;
+    width: 75%;
+    box-shadow: 0 0 10px var(--neon-cyan);
+}
+
+.stat-box {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    transition: 0.3s;
+}
+
+    .stat-box:hover {
+        border-color: var(--neon-purple);
+        background: rgba(188, 19, 254, 0.05);
+    }
+
+.stat-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    color: #fff;
+    display: block;
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--neon-cyan);
+    letter-spacing: 1px;
+}
+
+/* --- Logo & Imagens --- */
+.logo-cyber {
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 0 5px rgba(0, 243, 255, 0.4));
+}
+
+    .logo-cyber:hover {
+        filter: drop-shadow(0 0 15px rgba(0, 243, 255, 0.7));
+        transform: scale(1.05);
+    }
+
+.transition-hover:hover {
+    background-color: rgba(255,255,255, 0.02);
+}
+
+.cyber-img {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.transition-hover:hover .cyber-img, .cyber-card:hover .cyber-img {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.3) !important;
+}
+
+.rounded-geek {
+    border-radius: 12px;
+}
+
+/* Animação para o estado vazio do carrinho */
+@keyframes flicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+        opacity: 1;
+    }
+
+    20%, 24%, 55% {
+        opacity: 0.4;
+    }
+}
+
+.holographic-flicker {
+    animation: flicker 4s infinite;
+}
