@@ -1,5 +1,5 @@
 ﻿using GameShark.Infrastructure.Entities;
-using GameShark.Web.Areas.Admin.Models; // Necessário para o UsuarioCreateVm
+using GameShark.Web.Areas.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -19,7 +19,8 @@ public class UsuariosController : Controller
     // GET: Create (Para você recrutar Staff ou forçar a criação de um Player)
     public IActionResult Create()
     {
-        ViewBag.Cargos = new[] { "Admin", "Gerente", "Funcionario", "Player" };
+        // 👇 AJUSTE AQUI: Trocamos Funcionario por Estoquista para bater com a Navbar
+        ViewBag.Cargos = new[] { "Admin", "Gerente", "Estoquista", "Player" };
         return View();
     }
 
@@ -28,7 +29,8 @@ public class UsuariosController : Controller
     {
         if (!ModelState.IsValid)
         {
-            ViewBag.Cargos = new[] { "Admin", "Gerente", "Funcionario", "Player" };
+            // 👇 AJUSTE AQUI TAMBÉM
+            ViewBag.Cargos = new[] { "Admin", "Gerente", "Estoquista", "Player" };
             return View(model);
         }
 
@@ -43,7 +45,8 @@ public class UsuariosController : Controller
 
         foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
 
-        ViewBag.Cargos = new[] { "Admin", "Gerente", "Funcionario", "Player" };
+        // 👇 E AQUI TAMBÉM
+        ViewBag.Cargos = new[] { "Admin", "Gerente", "Estoquista", "Player" };
         return View(model);
     }
 

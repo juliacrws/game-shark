@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Oráculo de Loot";
+}
+
+<div class="row justify-content-center mt-5 mb-5">
+    <div class="col-md-8 text-center mb-4">
+        <i class="bi bi-cpu display-1 text-neon-purple mb-3" style="filter: drop-shadow(0 0 15px rgba(188, 19, 254, 0.6));"></i>
+        <h2 class="text-uppercase fw-bold text-light" style="font-family: 'Orbitron', sans-serif;">Oráculo de Loot</h2>
+        <p class="text-muted font-monospace fs-5">Responda ao algoritmo e descubra sua próxima obsessão.</p>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card card-geek shadow-lg bg-darker-bg border-neon-purple p-4">
+            <form asp-action="Recomendacao" method="post">
+                
+                <h5 class="text-neon-cyan fw-bold mb-3"><i class="bi bi-1-circle"></i> Qual é a sua Vibe hoje?</h5>
+                <div class="mb-4">
+                    <select name="vibe" class="form-select form-control-geek border-secondary py-3" required>
+                        <option value="" disabled selected>Selecione seu estilo...</option>
+                        <option value="Ação">Tiro, Porrada e Bomba (Ação/Aventura)</option>
+                        <option value="RPG">Quero me perder em outro mundo (RPG)</option>
+                        <option value="Esporte">Competição pura (Esportes/Corrida)</option>
+                        <option value="Terror">Quero tomar susto (Terror/Sobrevivência)</option>
+                    </select>
+                </div>
+
+                <h5 class="text-neon-cyan fw-bold mb-3"><i class="bi bi-2-circle"></i> Onde você joga?</h5>
+                <div class="mb-5">
+                    <select name="plataforma" class="form-select form-control-geek border-secondary py-3" required>
+                        <option value="" disabled selected>Escolha seu hardware...</option>
+                        <option value="PlayStation">PlayStation</option>
+                        <option value="Xbox">Xbox</option>
+                        <option value="PC">PC Master Race</option>
+                        <option value="Nintendo">Nintendo</option>
+                    </select>
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-neon-purple btn-lg fw-bold text-uppercase py-3 shadow-lg" style="font-family: 'Orbitron', sans-serif; letter-spacing: 2px;">
+                        <i class="bi bi-magic me-2"></i> Consultar Algoritmo
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

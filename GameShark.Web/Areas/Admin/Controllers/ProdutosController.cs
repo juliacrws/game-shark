@@ -3,6 +3,7 @@ using GameShark.Domain.Entities;
 using GameShark.Domain.Enums;
 using GameShark.Infrastructure.Persistence;
 using GameShark.Web.Areas.Admin.Models;
+using GameShark.Web.Helpers; // 👈 Importando a nossa classe de segurança!
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -11,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace GameShark.Web.Areas.Admin.Controllers;
 
 [Area("Admin")]
-[Authorize(Roles = "Admin")] // 👈 A FECHADURA MÁGICA! Só entra quem tem a role "Admin"
+[Authorize(Roles = "Admin")]
 public class ProdutosController : Controller
 {
     private readonly AppDbContext _context;
@@ -54,6 +55,17 @@ public class ProdutosController : Controller
             return View(model);
         }
 
+        // 👇 BLINDAGEM NO CREATE
+        if (model.Capa != null)
+        {
+            if (!ImageSecurity.IsValidImage(model.Capa))
+            {
+                ModelState.AddModelError("Capa", "Alerta de Segurança: Arquivo inválido. Use apenas JPG, PNG ou WEBP até 5MB.");
+                await SetLists(model.CategoriaId, model.PlataformaId, model.Classificacao);
+                return View(model);
+            }
+        }
+
         var p = new Produto
         {
             Nome = model.Nome,
@@ -62,7 +74,7 @@ public class ProdutosController : Controller
             PlataformaId = model.PlataformaId,
             Descricao = model.Descricao,
             Estoque = model.Estoque,
-            Classificacao = model.Classificacao // 👈 Ponte 1: Do formulário pro Banco!
+            Classificacao = model.Classificacao
         };
 
         if (model.Capa != null) p.ImagemUrl = await SaveFile(model.Capa);
@@ -91,7 +103,7 @@ public class ProdutosController : Controller
             ImagemUrl = p.ImagemUrl,
             CategoriaId = p.CategoriaId,
             PlataformaId = p.PlataformaId,
-            Classificacao = p.Classificacao // 👈 Ponte 2: Do Banco pra Tela!
+            Classificacao = p.Classificacao
         });
     }
 
@@ -104,6 +116,17 @@ public class ProdutosController : Controller
             return View(model);
         }
 
+        // 👇 BLINDAGEM NO EDIT
+        if (model.Capa != null)
+        {
+            if (!ImageSecurity.IsValidImage(model.Capa))
+            {
+                ModelState.AddModelError("Capa", "Alerta de Segurança: Arquivo inválido. Use apenas JPG, PNG ou WEBP até 5MB.");
+                await SetLists(model.CategoriaId, model.PlataformaId, model.Classificacao);
+                return View(model);
+            }
+        }
+
         var p = await _context.Produtos.FindAsync(model.Id);
         if (p == null) return NotFound();
 
@@ -113,7 +136,7 @@ public class ProdutosController : Controller
         p.Descricao = model.Descricao;
         p.CategoriaId = model.CategoriaId;
         p.PlataformaId = model.PlataformaId;
-        p.Classificacao = model.Classificacao; // 👈 Ponte 3: Atualizando no Banco!
+        p.Classificacao = model.Classificacao;
 
         if (model.Capa != null) p.ImagemUrl = await SaveFile(model.Capa);
 
@@ -126,7 +149,6 @@ public class ProdutosController : Controller
     {
         if (id == null) return NotFound();
 
-        // O Include previne a tela de delete de quebrar!
         var p = await _context.Produtos
             .Include(p => p.Categoria)
             .Include(p => p.Plataforma)
@@ -146,13 +168,11 @@ public class ProdutosController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    // 👇 O CÉREBRO DAS LISTAS: Agora ele entende os Enums
     private async Task SetLists(int? categoriaIdSelecionada = null, int? plataformaIdSelecionada = null, ClassificacaoIndicativa? classificacaoSelecionada = null)
     {
         ViewBag.CategoriaId = new SelectList(await _context.Categorias.ToListAsync(), "Id", "Nome", categoriaIdSelecionada);
         ViewBag.PlataformaId = new SelectList(await _context.Plataformas.ToListAsync(), "Id", "Nome", plataformaIdSelecionada);
 
-        // Pega todos os valores do Enum e converte para um formato que o Dropdown (Select) HTML aceite
         var listaClassificacoes = Enum.GetValues(typeof(ClassificacaoIndicativa))
                                       .Cast<ClassificacaoIndicativa>()
                                       .Select(c => new { Id = (int)c, Nome = c.ToString() });
@@ -167,7 +187,6 @@ public class ProdutosController : Controller
     {
         var name = Guid.NewGuid() + "_" + file.FileName;
 
-        // Blindagem do caminho
         string rootPath = string.IsNullOrWhiteSpace(_env.WebRootPath)
             ? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot")
             : _env.WebRootPath;

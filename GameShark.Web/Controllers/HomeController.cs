@@ -16,27 +16,22 @@ public class HomeController : Controller
         _context = context;
     }
 
-    // 👇 Agora o Index recebe o que o usuário digitou na barra
     public async Task<IActionResult> Index(string? busca)
     {
-        // Devolve o termo para a View manter o texto na barra de pesquisa
         ViewData["BuscaAtual"] = busca;
 
-        // Prepara a consulta base
         var query = _context.Produtos
             .Include(p => p.Categoria)
             .Include(p => p.Plataforma)
             .AsQueryable();
 
-        // Se o usuário digitou algo, a gente filtra!
         if (!string.IsNullOrEmpty(busca))
         {
-            query = query.Where(p => p.Nome.Contains(busca) || 
-                                     p.Plataforma!.Nome.Contains(busca) || // 👈 Adicionado o '!'
-                                     p.Categoria!.Nome.Contains(busca));   // 👈 Adicionado o '!'
+            query = query.Where(p => p.Nome.Contains(busca) ||
+                                     p.Plataforma!.Nome.Contains(busca) ||
+                                     p.Categoria!.Nome.Contains(busca));
         }
 
-        // Executa a busca e traz os 20 últimos resultados
         var produtos = await query
             .OrderByDescending(p => p.Id)
             .Take(20)
@@ -57,14 +52,45 @@ public class HomeController : Controller
         return View(produto);
     }
 
-    // 👇 O Backend do Botão Avise-me!
     [HttpPost]
     public IActionResult AviseMe(int produtoId, string emailCliente)
     {
-        // Aqui, no futuro, você pode salvar na tabela de e-mails para disparar marketing.
-        // Por enquanto, vamos dar o feedback visual de sucesso com o nosso Toast Neon!
         TempData["MensagemSucesso"] = $"Radar ativado! Avisaremos em {emailCliente} assim que o loot chegar.";
         return RedirectToAction(nameof(Index));
+    }
+
+    // 👇 O ORÁCULO DE LOOT (QUIZ)
+    public IActionResult Quiz()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Recomendacao(string vibe, string plataforma)
+    {
+        var query = _context.Produtos
+            .Include(p => p.Categoria)
+            .Include(p => p.Plataforma)
+            .Where(p => p.Estoque > 0)
+            .AsQueryable();
+
+        if (!string.IsNullOrEmpty(vibe))
+        {
+            query = query.Where(p => p.Categoria!.Nome.Contains(vibe));
+        }
+
+        if (!string.IsNullOrEmpty(plataforma))
+        {
+            query = query.Where(p => p.Plataforma!.Nome.Contains(plataforma));
+        }
+
+        var recomendados = await query.Take(4).ToListAsync();
+
+        ViewData["MensagemOraculo"] = recomendados.Any()
+            ? "O Oráculo analisou seu perfil e encontrou estes matches perfeitos:"
+            : "Sua vibe é tão única que nosso estoque atual não deu match. Mas novas naves chegam amanhã!";
+
+        return View("Recomendacao", recomendados);
     }
 
     public IActionResult Privacy()
