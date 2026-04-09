@@ -12,6 +12,7 @@ public class AppDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<GameShark.Domain.Entities.PedidoItem> PedidoItens { get; set; }
     public DbSet<Produto> Produtos => Set<Produto>();
     public DbSet<Categoria> Categorias => Set<Categoria>();
+    public DbSet<AlertaEstoque> AlertasEstoque { get; set; }
     public DbSet<Plataforma> Plataformas => Set<Plataforma>();
     public DbSet<GameShark.Domain.Entities.CarrinhoItem> CarrinhoItems { get; set; }
     public DbSet<LogAcesso> LogsAcesso { get; set; }

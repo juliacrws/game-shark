@@ -1,0 +1,69 @@
+﻿@model IEnumerable<GameShark.Domain.Entities.AlertaEstoque>
+@{
+    ViewData["Title"] = "Monitor do Radar";
+}
+
+<div class="container-fluid mt-4 mb-5">
+    <div class="d-flex justify-content-between align-items-center mb-4 border-bottom border-secondary pb-3">
+        <h2 class="text-warning fw-bold text-uppercase" style="font-family: 'Orbitron', sans-serif;">
+            <i class="bi bi-radar"></i> Radar de Loot
+        </h2>
+        <a href="/Admin/Dashboard" class="btn btn-outline-secondary btn-sm fw-bold">
+            <i class="bi bi-arrow-left"></i> Voltar à Boss Room
+        </a>
+    </div>
+
+    <div class="card card-geek shadow-lg bg-darker-bg border-warning border-1">
+        <div class="card-body p-0 overflow-hidden rounded">
+            <table class="table table-dark table-hover table-borderless align-middle mb-0">
+                <thead class="border-bottom border-warning text-uppercase text-muted" style="font-family: 'Orbitron', sans-serif; font-size: 0.85rem;">
+                    <tr class="bg-black">
+                        <th class="ps-4">Data do Pedido</th>
+                        <th>E-mail do Cliente</th>
+                        <th>Produto Desejado</th>
+                        <th class="pe-4 text-end">Ação</th>
+                    </tr>
+                </thead>
+                <tbody style="font-family: 'Rajdhani', sans-serif;">
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var alerta in Model)
+                        {
+                            <tr class="border-bottom border-secondary">
+                                <td class="ps-4 text-light">@alerta.DataSolicitacao.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td class="fw-bold text-neon-cyan">@alerta.EmailCliente</td>
+                                <td>
+                                    <span class="text-light fw-bold">@alerta.Produto?.Nome</span>
+                                    @if (alerta.Produto?.Estoque > 0)
+                                    {
+                                        <span class="badge bg-neon-green ms-2 text-dark">ESTOQUE DISPONÍVEL!</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger ms-2">Zero Estoque</span>
+                                    }
+                                </td>
+                                <td class="pe-4 text-end">
+                                    <form asp-action="MarcarResolvido" method="post" class="m-0">
+                                        <input type="hidden" name="id" value="@alerta.Id" />
+                                        <button type="submit" class="btn btn-sm btn-outline-warning fw-bold">
+                                            <i class="bi bi-check2-all"></i> Marcar Resolvido
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4" class="text-center py-5 text-muted font-monospace">
+                                Nenhum sinal detectado no radar no momento.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

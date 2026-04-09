@@ -53,12 +53,25 @@ public class HomeController : Controller
     }
 
     [HttpPost]
-    public IActionResult AviseMe(int produtoId, string emailCliente)
+    public async Task<IActionResult> AviseMe(int produtoId, string emailCliente)
     {
+        // 1. Cria o registro do alerta
+        var alerta = new AlertaEstoque
+        {
+            ProdutoId = produtoId,
+            EmailCliente = emailCliente,
+            DataSolicitacao = DateTime.Now,
+            StatusResolvido = false
+        };
+
+        // 2. Salva no banco de dados
+        _context.AlertasEstoque.Add(alerta);
+        await _context.SaveChangesAsync();
+
+        // 3. Avisa o jogador
         TempData["MensagemSucesso"] = $"Radar ativado! Avisaremos em {emailCliente} assim que o loot chegar.";
         return RedirectToAction(nameof(Index));
     }
-
     // 👇 O ORÁCULO DE LOOT (QUIZ)
     public IActionResult Quiz()
     {
