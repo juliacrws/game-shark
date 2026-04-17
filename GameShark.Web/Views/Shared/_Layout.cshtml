@@ -4,7 +4,6 @@
 @inject Microsoft.AspNetCore.Identity.UserManager<GameShark.Infrastructure.Entities.ApplicationUser> UserManager
 @{
     int cartCount = 0;
-    // Se estiver logado, vai lá no banco e conta quantos itens o usuário tem
     if (User.Identity?.IsAuthenticated == true)
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -26,12 +25,12 @@
     <link rel="icon" type="image/png" href="~/images/favicon.png" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark navbar-geek mb-4 py-3 sticky-top shadow-lg">
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-geek py-3 fixed-top shadow-lg" style="background-color: rgba(15, 15, 20, 0.85) !important; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);">
             <div class="container-fluid px-4">
                 <a class="navbar-brand text-neon-cyan fw-bold d-flex align-items-center gap-2 logo-cyber me-4" asp-area="" asp-controller="Home" asp-action="Index" style="letter-spacing: 2px;">
-                    <img src="~/images/favicon.png" alt="Logo GameShark" style="width: 32px; height: 32px;" class="rounded" />
+                    <img src="~/images/favicon.png" alt="Logo GameShark" style="height: 38px; width: auto; object-fit: contain; opacity: 0.9; filter: drop-shadow(0px 4px 8px rgba(0, 243, 255, 0.4)); transition: all 0.3s ease;" />
                     GAMESHARK
                 </a>
                 
@@ -92,8 +91,13 @@
                             var nomeParaExibir = !string.IsNullOrEmpty(appUser?.Apelido) ? appUser.Apelido : (appUser?.NomeCompleto?.Split(' ')[0] ?? "Player");
                             
                             <li class="nav-item dropdown ms-2">
-                                <a class="text-decoration-none d-flex align-items-center border-start border-secondary ps-3 dropdown-toggle" href="#" data-bs-toggle="dropdown">
-                                    <img src="@(appUser?.FotoPerfilUrl ?? "/images/default-avatar.png")" class="rounded-circle border border-neon-cyan" style="width: 36px; height: 36px; object-fit: cover;" />
+                                <a class="text-decoration-none d-flex align-items-center ps-3 dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                                    <div style="width: 42px; height: 42px; background: var(--neon-cyan); padding: 2px; clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);">
+                                        <img src="@(appUser?.FotoPerfilUrl ?? "/images/default-avatar.png")"
+                                             style="width: 100%; height: 100%; object-fit: cover; clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); transition: all 0.3s ease;"
+                                             onmouseover="this.style.transform='scale(1.1)'"
+                                             onmouseout="this.style.transform='scale(1)'" />
+                                    </div>
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end bg-darker-bg border-secondary shadow-lg mt-2">
                                     <li><h6 class="dropdown-header text-neon-cyan fw-bold">Player: @nomeParaExibir</h6></li>
@@ -120,36 +124,78 @@
     </header>
     
     <div class="container">
-        <main role="main" class="pb-3">
+        <main role="main" class="pb-3 pt-5 mt-4">
             @RenderBody()
         </main>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-    
-    @if (TempData["MensagemSucesso"] != null)
-    {
-        <div class="toast-container position-fixed bottom-0 end-0 p-4" style="z-index: 10000;">
-            <div id="geekToast" class="toast align-items-center bg-darker-bg border-neon-cyan shadow-lg" role="alert" aria-live="assertive" aria-atomic="true" style="border-width: 2px;">
-                <div class="d-flex">
-                    <div class="toast-body text-neon-cyan fw-bold fs-6" style="font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">
-                        <i class="bi bi-check2-square me-2 fs-5"></i> @TempData["MensagemSucesso"]
+    <footer class="footer-geek mt-auto py-5 position-relative">
+        <div class="container px-4">
+            <div class="row gy-5">
+                <div class="col-lg-4 col-md-6">
+                    <a class="text-neon-cyan fw-bold d-flex align-items-center gap-2 logo-cyber mb-3 text-decoration-none fs-4" style="letter-spacing: 2px;" href="/">
+                        <img src="~/images/favicon.png" alt="Logo GameShark" style="height: 50px; width: auto; object-fit: contain; opacity: 0.9; filter: drop-shadow(0px 6px 10px rgba(0, 243, 255, 0.4)); transition: all 0.3s ease;" />
+                        GAMESHARK
+                    </a>
+                    <p class="text-muted pe-lg-4 mb-4" style="font-size: 0.95rem;">
+                        O seu terminal definitivo para loot, hardware e tudo que você precisa para platinar a vida real.
+                        Level up your setup.
+                    </p>
+                    <div class="d-flex gap-3 social-links">
+                        <a href="#" class="btn btn-outline-neon-cyan rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;"><i class="bi bi-discord"></i></a>
+                        <a href="#" class="btn btn-outline-neon-cyan rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="btn btn-outline-neon-cyan rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;"><i class="bi bi-twitch"></i></a>
+                        <a href="#" class="btn btn-outline-neon-cyan rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;"><i class="bi bi-youtube"></i></a>
                     </div>
-                    <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="text-light fw-bold mb-4" style="font-family: 'Orbitron', sans-serif;">CONTATO_</h5>
+                    <ul class="list-unstyled text-muted contact-info">
+                        <li class="mb-3 d-flex align-items-start gap-3">
+                            <i class="bi bi-geo-alt text-neon-cyan fs-4 mt-1"></i>
+                            <div>
+                                <span class="d-block text-light fw-bold">Loja Game Shark</span>
+                                Rua São Paulo - Liberdade<br>São Paulo - SP, 01513-000
+                            </div>
+                        </li>
+                        <li class="mb-3 d-flex align-items-center gap-3">
+                            <i class="bi bi-telephone text-neon-cyan fs-4"></i>
+                            <span class="fs-5">(11) 4002-8922</span>
+                        </li>
+                        <li class="d-flex align-items-center gap-3">
+                            <i class="bi bi-envelope text-neon-cyan fs-4"></i>
+                            <span>suporte@gameshark.com.br</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                    <h5 class="text-light fw-bold mb-4" style="font-family: 'Orbitron', sans-serif;">RADAR DE LOCALIZAÇÃO_</h5>
+                    <div class="map-container rounded border border-secondary overflow-hidden shadow-lg p-1 bg-darker-bg" style="border-width: 2px !important;">
+                        <iframe class="dark-map rounded"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.3136367899715!2d-46.63914531325594!3d-23.557176606768618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5997e29ffbad%3A0x26e6acc0c16f580a!2sFeira%20Livre%20-%20Liberdade!5e0!3m2!1spt-BR!2sbr!4v1776387272620!5m2!1spt-BR!2sbr"
+                                width="100%"
+                                height="180"
+                                style="border:0;"
+                                allowfullscreen=""
+                                loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-5 pt-4 border-top border-secondary">
+                <div class="col-12 d-flex justify-content-between align-items-center text-muted" style="font-size: 0.85rem;">
+                    <span>© 2026 GameShark Systems. Todos os direitos reservados.</span>
+                    <span class="badge bg-dark border border-secondary text-muted">System v1.0.4</span>
                 </div>
             </div>
         </div>
+    </footer>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function () {
-            var toastEl = document.getElementById('geekToast');
-            if(toastEl) {
-            var toast = new bootstrap.Toast(toastEl, { delay: 4000 });
-            toast.show();
-            }
-            });
-        </script>
-    }
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

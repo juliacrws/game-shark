@@ -16,8 +16,4 @@
     <ProjectReference Include="..\GameShark.Application\GameShark.Application.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>

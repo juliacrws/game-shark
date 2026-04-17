@@ -17,79 +17,91 @@
 
         private void InitializeComponent()
         {
-            this.painelLogin = new System.Windows.Forms.Panel();
-            this.lblLogo = new System.Windows.Forms.Label();
-            this.txtEmail = new System.Windows.Forms.TextBox();
-            this.txtSenha = new System.Windows.Forms.TextBox();
-            this.btnEntrar = new System.Windows.Forms.Button();
-            this.painelLogin.SuspendLayout();
-            this.SuspendLayout();
-
-            // painelLogin (Centralizado na tela)
-            this.painelLogin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(24)))));
-            this.painelLogin.Controls.Add(this.btnEntrar);
-            this.painelLogin.Controls.Add(this.txtSenha);
-            this.painelLogin.Controls.Add(this.txtEmail);
-            this.painelLogin.Controls.Add(this.lblLogo);
-            this.painelLogin.Location = new System.Drawing.Point(312, 184);
-            this.painelLogin.Name = "painelLogin";
-            this.painelLogin.Size = new System.Drawing.Size(400, 400);
-
-            // lblLogo
-            this.lblLogo.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblLogo.Font = new System.Drawing.Font("Consolas", 28F, System.Drawing.FontStyle.Bold);
-            this.lblLogo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
-            this.lblLogo.Location = new System.Drawing.Point(0, 0);
-            this.lblLogo.Name = "lblLogo";
-            this.lblLogo.Size = new System.Drawing.Size(400, 100);
-            this.lblLogo.Text = "GAMESHARK";
-            this.lblLogo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-
-            // txtEmail
-            this.txtEmail.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(40)))));
-            this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtEmail.Font = new System.Drawing.Font("Segoe UI", 16F);
-            this.txtEmail.ForeColor = System.Drawing.Color.White;
-            this.txtEmail.Location = new System.Drawing.Point(50, 130);
-            this.txtEmail.Name = "txtEmail";
-            this.txtEmail.PlaceholderText = "E-mail do Operador";
-            this.txtEmail.Size = new System.Drawing.Size(300, 36);
-
-            // txtSenha
-            this.txtSenha.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(30)))), ((int)(((byte)(40)))));
-            this.txtSenha.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSenha.Font = new System.Drawing.Font("Segoe UI", 16F);
-            this.txtSenha.ForeColor = System.Drawing.Color.White;
-            this.txtSenha.Location = new System.Drawing.Point(50, 190);
-            this.txtSenha.Name = "txtSenha";
-            this.txtSenha.PlaceholderText = "Senha";
-            this.txtSenha.PasswordChar = '•';
-            this.txtSenha.Size = new System.Drawing.Size(300, 36);
-
+            painelLogin = new Panel();
+            btnEntrar = new Button();
+            txtSenha = new TextBox();
+            txtEmail = new TextBox();
+            lblLogo = new Label();
+            painelLogin.SuspendLayout();
+            SuspendLayout();
+            // 
+            // painelLogin
+            // 
+            painelLogin.BackColor = Color.FromArgb(17, 17, 24);
+            painelLogin.Controls.Add(btnEntrar);
+            painelLogin.Controls.Add(txtSenha);
+            painelLogin.Controls.Add(txtEmail);
+            painelLogin.Controls.Add(lblLogo);
+            painelLogin.Location = new Point(312, 184);
+            painelLogin.Name = "painelLogin";
+            painelLogin.Size = new Size(400, 400);
+            painelLogin.TabIndex = 0;
+            // 
             // btnEntrar
-            this.btnEntrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
-            this.btnEntrar.FlatAppearance.BorderSize = 0;
-            this.btnEntrar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEntrar.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
-            this.btnEntrar.ForeColor = System.Drawing.Color.Black;
-            this.btnEntrar.Location = new System.Drawing.Point(50, 260);
-            this.btnEntrar.Name = "btnEntrar";
-            this.btnEntrar.Size = new System.Drawing.Size(300, 50);
-            this.btnEntrar.Text = "ACESSAR TERMINAL";
-            this.btnEntrar.UseVisualStyleBackColor = false;
-
+            // 
+            btnEntrar.BackColor = Color.FromArgb(0, 243, 255);
+            btnEntrar.FlatAppearance.BorderSize = 0;
+            btnEntrar.FlatStyle = FlatStyle.Flat;
+            btnEntrar.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            btnEntrar.ForeColor = Color.Black;
+            btnEntrar.Location = new Point(50, 260);
+            btnEntrar.Name = "btnEntrar";
+            btnEntrar.Size = new Size(300, 50);
+            btnEntrar.TabIndex = 0;
+            btnEntrar.Text = "ACESSAR TERMINAL";
+            btnEntrar.UseVisualStyleBackColor = false;
+            btnEntrar.Click += btnEntrar_Click_1;
+            // 
+            // txtSenha
+            // 
+            txtSenha.BackColor = Color.FromArgb(30, 30, 40);
+            txtSenha.BorderStyle = BorderStyle.FixedSingle;
+            txtSenha.Font = new Font("Segoe UI", 16F);
+            txtSenha.ForeColor = Color.White;
+            txtSenha.Location = new Point(50, 190);
+            txtSenha.Name = "txtSenha";
+            txtSenha.PasswordChar = '•';
+            txtSenha.PlaceholderText = "Senha";
+            txtSenha.Size = new Size(300, 36);
+            txtSenha.TabIndex = 1;
+            // 
+            // txtEmail
+            // 
+            txtEmail.BackColor = Color.FromArgb(30, 30, 40);
+            txtEmail.BorderStyle = BorderStyle.FixedSingle;
+            txtEmail.Font = new Font("Segoe UI", 16F);
+            txtEmail.ForeColor = Color.White;
+            txtEmail.Location = new Point(50, 130);
+            txtEmail.Name = "txtEmail";
+            txtEmail.PlaceholderText = "E-mail do Operador";
+            txtEmail.Size = new Size(300, 36);
+            txtEmail.TabIndex = 2;
+            // 
+            // lblLogo
+            // 
+            lblLogo.Dock = DockStyle.Top;
+            lblLogo.Font = new Font("Consolas", 28F, FontStyle.Bold);
+            lblLogo.ForeColor = Color.FromArgb(0, 243, 255);
+            lblLogo.Location = new Point(0, 0);
+            lblLogo.Name = "lblLogo";
+            lblLogo.Size = new Size(400, 100);
+            lblLogo.TabIndex = 3;
+            lblLogo.Text = "GAMESHARK";
+            lblLogo.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // frmLogin
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(5)))), ((int)(((byte)(8)))));
-            this.ClientSize = new System.Drawing.Size(1024, 768);
-            this.Controls.Add(this.painelLogin);
-            this.Name = "frmLogin";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "GameShark - Autenticação";
-            this.painelLogin.ResumeLayout(false);
-            this.painelLogin.PerformLayout();
-            this.ResumeLayout(false);
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(5, 5, 8);
+            ClientSize = new Size(1024, 768);
+            Controls.Add(painelLogin);
+            Name = "frmLogin";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "GameShark - Autenticação";
+            painelLogin.ResumeLayout(false);
+            painelLogin.PerformLayout();
+            ResumeLayout(false);
         }
     }
 }

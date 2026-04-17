@@ -7,15 +7,15 @@ namespace GameShark.Desktop.Forms;
 public partial class frmLogin : Form
 {
     private readonly AuthApiService _apiService;
-    
+
     // 🚀 O SEGREDO: O Program.cs vai ler essa variável para saber se abre o sistema ou não
-    public bool LoginComSucesso { get; private set; } = false; 
+    public bool LoginComSucesso { get; private set; } = false;
 
     public frmLogin()
     {
         InitializeComponent();
         _apiService = new AuthApiService();
-        
+
         btnEntrar.Click += BtnEntrar_Click;
     }
 
@@ -39,7 +39,7 @@ public partial class frmLogin : Form
         {
             // DEU CERTO! Avisamos que o login passou e fechamos a tela de login.
             LoginComSucesso = true;
-            this.Close(); 
+            this.Close();
         }
         else
         {
@@ -49,5 +49,10 @@ public partial class frmLogin : Form
             txtSenha.Clear();
             txtSenha.Focus();
         }
+    }
+
+    private void btnEntrar_Click_1(object sender, EventArgs e)
+    {
+
     }
 }
