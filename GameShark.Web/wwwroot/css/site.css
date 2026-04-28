@@ -358,3 +358,23 @@ label.label-geek {
     .dark-map:hover {
         opacity: 1;
     }
+
+.btn-neon-purple {
+    background-color: transparent;
+    border: 2px solid #bc13fe;
+    color: #bc13fe;
+    transition: all 0.3s ease;
+}
+
+    .btn-neon-purple:hover {
+        background-color: #bc13fe;
+        color: white;
+        box-shadow: 0 0 20px rgba(188, 19, 254, 0.7);
+        transform: scale(1.02);
+    }
+
+.form-control-geek:focus {
+    border-color: #bc13fe !important;
+    box-shadow: 0 0 10px rgba(188, 19, 254, 0.3);
+    background-color: rgba(0, 0, 0, 0.5);
+}

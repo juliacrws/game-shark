@@ -12,8 +12,8 @@ public partial class ucFechamento : UserControl
     private System.Windows.Forms.Timer _radarTimer;
 
     // 🎮 NOVOS ITENS GAMER: A Barra de XP e o Texto de Level!
-    private ProgressBar pbXP;
-    private Label lblLevel;
+    private System.Windows.Forms.ProgressBar pbXP = null!;
+    private System.Windows.Forms.Label lblLevel = null!;
     private readonly decimal META_DIARIA = 1000.00m; // 👈 A meta do Boss!
 
     public ucFechamento()

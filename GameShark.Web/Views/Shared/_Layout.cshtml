@@ -24,6 +24,36 @@
     
     <link rel="icon" type="image/png" href="~/images/favicon.png" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <style>
+        /* AJUSTES DE VISUALIZAÇÃO AMPLIADA */
+        
+        /* 1. Toast (Pop-up de canto) maior */
+        .toast-geek-custom {
+            width: 400px !important; /* Aumentado */
+            background-color: rgba(15, 15, 20, 0.95) !important;
+            backdrop-filter: blur(10px);
+        }
+
+        /* 2. Modal de Reserva Ampliado */
+        .modal-xl-custom {
+            max-width: 650px; /* Largura maior para melhor leitura */
+        }
+
+        .rounded-geek {
+            border-radius: 15px !important;
+        }
+
+        .holographic-flicker {
+            animation: flicker 2s infinite;
+        }
+
+        @@keyframes flicker {
+            0% { opacity: 1; filter: drop-shadow(0 0 5px #00ff41); }
+            50% { opacity: 0.8; filter: drop-shadow(0 0 15px #00ff41); }
+            100% { opacity: 1; filter: drop-shadow(0 0 5px #00ff41); }
+        }
+    </style>
 </head>
 <body class="d-flex flex-column min-vh-100">
     <header>
@@ -39,7 +69,6 @@
                 </button>
                 
                 <div class="navbar-collapse collapse d-lg-inline-flex justify-content-between">
-                    
                     <ul class="navbar-nav align-items-center mb-2 mb-lg-0">
                         <li class="nav-item">
                             <a class="nav-link text-uppercase fw-bold text-light transition-hover" asp-controller="Home" asp-action="Index">Catálogo</a>
@@ -71,7 +100,6 @@
                             <li class="nav-item"><a class="nav-link text-light fw-bold" href="/Admin/Dashboard" title="Boss Room"><i class="bi bi-cpu text-neon-cyan fs-5"></i></a></li>
                             <li class="nav-item"><a class="nav-link text-neon-green fw-bold" href="/Admin/Caixa" title="Caixa"><i class="bi bi-safe2 fs-5"></i></a></li>
                             <li class="nav-item"><a class="nav-link text-warning fw-bold" href="/Admin/Auditoria" title="Auditoria"><i class="bi bi-shield-lock fs-5"></i></a></li>
-                            
                             <li class="nav-item"><a class="nav-link text-warning fw-bold" href="/Admin/Radar" title="Radar de Loot"><i class="bi bi-radar fs-5" style="filter: drop-shadow(0 0 5px #ffc107);"></i></a></li>
                         }
                         
@@ -155,8 +183,8 @@
                         <li class="mb-3 d-flex align-items-start gap-3">
                             <i class="bi bi-geo-alt text-neon-cyan fs-4 mt-1"></i>
                             <div>
-                                <span class="d-block text-light fw-bold">Loja Game Shark</span>
-                                Rua São Paulo - Liberdade<br>São Paulo - SP, 01513-000
+                                <span class="d-block text-light fw-bold">Matriz Operacional</span>
+                                Av. Paulista, 1578 - Bela Vista<br>São Paulo - SP, 01310-200
                             </div>
                         </li>
                         <li class="mb-3 d-flex align-items-center gap-3">
@@ -173,9 +201,8 @@
                 <div class="col-lg-4 col-md-12">
                     <h5 class="text-light fw-bold mb-4" style="font-family: 'Orbitron', sans-serif;">RADAR DE LOCALIZAÇÃO_</h5>
                     <div class="map-container rounded border border-secondary overflow-hidden shadow-lg p-1 bg-darker-bg" style="border-width: 2px !important;">
-                        <iframe class="dark-map rounded"
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.3136367899715!2d-46.63914531325594!3d-23.557176606768618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce5997e29ffbad%3A0x26e6acc0c16f580a!2sFeira%20Livre%20-%20Liberdade!5e0!3m2!1spt-BR!2sbr!4v1776387272620!5m2!1spt-BR!2sbr"
-                                width="100%"
+                        <iframe class="dark-map rounded w-100"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1065964223285!2d-46.6539054!3d-23.5612841!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa315%3A0xd59f9431f2c9776a!2sAv.%20Paulista%2C%201578%20-%20Bela%20Vista%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%2001310-200!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr"
                                 height="180"
                                 style="border:0;"
                                 allowfullscreen=""
@@ -197,5 +224,84 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="toast-container position-fixed bottom-0 end-0 p-4" style="z-index: 10000;">
+            <div id="geekToast" class="toast align-items-center bg-darker-bg border-neon-cyan shadow-lg toast-geek-custom" role="alert" aria-live="assertive" aria-atomic="true" style="border-width: 2px;">
+                <div class="d-flex">
+                    <div class="toast-body text-neon-cyan fw-bold fs-5 p-4" style="font-family: 'Orbitron', sans-serif; letter-spacing: 1px;">
+                        <i class="bi bi-check2-square me-2 fs-4"></i> @TempData["MensagemSucesso"]
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-3 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+            var toastEl = document.getElementById('geekToast');
+            if(toastEl) {
+                // TEMPO AUMENTADO: delay: 8000 (8 segundos)
+                var toast = new bootstrap.Toast(toastEl, { delay: 8000 });
+                toast.show();
+            }
+            });
+        </script>
+    }
+
+    @if (TempData["ReservaSucesso"] != null)
+    {
+        <div class="modal fade" id="modalReservaSucesso" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-xl-custom">
+                <div class="modal-content bg-darker-bg border-neon-green shadow-lg rounded-geek" style="border-width: 2px;">
+                    
+                    <div class="modal-header border-bottom border-secondary p-4">
+                        <h4 class="modal-title text-neon-green fw-bold text-uppercase" style="font-family: 'Orbitron', sans-serif;">
+                            <i class="bi bi-check-circle-fill me-2"></i> Reserva Confirmada!
+                        </h4>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    
+                    <div class="modal-body p-5 text-center">
+                        <i class="bi bi-box-seam display-2 text-neon-green mb-4 holographic-flicker d-block"></i>
+                        <h3 class="text-light fw-bold mb-3">LOOT GARANTIDO!</h3>
+                        <p class="text-muted font-monospace mb-4 fs-5">O sistema processou sua requisição. Seu equipamento foi separado e aguarda extração.</p>
+
+                        <div class="bg-black p-4 rounded border border-secondary text-start mb-4 shadow-sm">
+                            <p class="mb-2 text-light fs-5"><i class="bi bi-geo-alt-fill text-neon-cyan me-2"></i><strong>Ponto de Extração:</strong></p>
+                            <p class="text-muted font-monospace ms-4 mb-4 fs-6">@(TempData["ReservaEndereco"] ?? "Av. Paulista, 1578 - Bela Vista, São Paulo - SP")</p>
+
+                            <p class="mb-2 text-light fs-5"><i class="bi bi-clock-fill text-neon-cyan me-2"></i><strong>Tempo Limite para Retirada:</strong></p>
+                            <p class="text-warning font-monospace ms-4 mb-0 fw-bold fs-4" style="text-shadow: 0 0 10px rgba(255, 193, 7, 0.3);">
+                                @(TempData["ReservaPrazo"] ?? "48 HORAS")
+                            </p>
+                        </div>
+                        
+                        <div class="alert alert-dark border-danger bg-transparent text-danger font-monospace py-3" style="font-size: 0.85rem; border-style: dashed;">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> PROTOCOLO: Se o loot não for resgatado no prazo, os itens retornam ao estoque global.
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer border-top border-secondary justify-content-center p-4">
+                        <button type="button" class="btn btn-neon-green fw-bold text-uppercase px-5 py-3 shadow fs-5" data-bs-dismiss="modal" style="font-family: 'Orbitron', sans-serif; letter-spacing: 2px;">
+                            ENTENDIDO, CÂMBIO! <i class="bi bi-send-check ms-2"></i>
+                        </button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+            var modalElement = document.getElementById('modalReservaSucesso');
+            if(modalElement) {
+                var modal = new bootstrap.Modal(modalElement);
+                modal.show();
+            }
+            });
+        </script>
+    }
 </body>
 </html>

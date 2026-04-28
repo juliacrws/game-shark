@@ -7,7 +7,8 @@
         private System.Windows.Forms.Panel painelConteudo;
         private System.Windows.Forms.Button btnCaixa;
         private System.Windows.Forms.Button btnRetirada;
-        private System.Windows.Forms.Button btnFechamento; // 👈 DECLARADO AQUI
+        private System.Windows.Forms.Button btnFechamento;
+        private System.Windows.Forms.Button btnFornecedores; // 👈 BOTÃO DO NOVO CRUD
         private System.Windows.Forms.Label lblLogo;
 
         protected override void Dispose(bool disposing)
@@ -21,114 +22,136 @@
 
         private void InitializeComponent()
         {
-            painelMenu = new Panel();
-            btnFechamento = new Button();
-            btnRetirada = new Button();
-            btnCaixa = new Button();
-            lblLogo = new Label();
-            painelConteudo = new Panel();
-            painelMenu.SuspendLayout();
-            SuspendLayout();
+            this.painelMenu = new System.Windows.Forms.Panel();
+            this.btnFornecedores = new System.Windows.Forms.Button();
+            this.btnFechamento = new System.Windows.Forms.Button();
+            this.btnRetirada = new System.Windows.Forms.Button();
+            this.btnCaixa = new System.Windows.Forms.Button();
+            this.lblLogo = new System.Windows.Forms.Label();
+            this.painelConteudo = new System.Windows.Forms.Panel();
+            this.painelMenu.SuspendLayout();
+            this.SuspendLayout();
             // 
             // painelMenu
             // 
-            painelMenu.BackColor = Color.FromArgb(17, 17, 24);
-            painelMenu.Controls.Add(btnFechamento);
-            painelMenu.Controls.Add(btnRetirada);
-            painelMenu.Controls.Add(btnCaixa);
-            painelMenu.Controls.Add(lblLogo);
-            painelMenu.Dock = DockStyle.Left;
-            painelMenu.Location = new Point(0, 0);
-            painelMenu.Name = "painelMenu";
-            painelMenu.Size = new Size(250, 768);
-            painelMenu.TabIndex = 0;
+            this.painelMenu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(24)))));
+            this.painelMenu.Controls.Add(this.btnFornecedores);
+            this.painelMenu.Controls.Add(this.btnFechamento);
+            this.painelMenu.Controls.Add(this.btnRetirada);
+            this.painelMenu.Controls.Add(this.btnCaixa);
+            this.painelMenu.Controls.Add(this.lblLogo);
+            this.painelMenu.Dock = System.Windows.Forms.DockStyle.Left;
+            this.painelMenu.Location = new System.Drawing.Point(0, 0);
+            this.painelMenu.Name = "painelMenu";
+            this.painelMenu.Size = new System.Drawing.Size(250, 768);
+            this.painelMenu.TabIndex = 0;
+            // 
+            // btnFornecedores
+            // 
+            this.btnFornecedores.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnFornecedores.FlatAppearance.BorderSize = 0;
+            this.btnFornecedores.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
+            this.btnFornecedores.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFornecedores.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnFornecedores.ForeColor = System.Drawing.Color.White;
+            this.btnFornecedores.Location = new System.Drawing.Point(0, 280);
+            this.btnFornecedores.Name = "btnFornecedores";
+            this.btnFornecedores.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.btnFornecedores.Size = new System.Drawing.Size(250, 60);
+            this.btnFornecedores.TabIndex = 4;
+            this.btnFornecedores.Text = "🚚 Fornecedores";
+            this.btnFornecedores.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFornecedores.UseVisualStyleBackColor = true;
+            // IMPORTANTE: Adicione o evento de click no code-behind (frmPrincipal.cs)
+            // this.btnFornecedores.Click += new System.EventHandler(this.btnFornecedores_Click);
             // 
             // btnFechamento
             // 
-            btnFechamento.Dock = DockStyle.Top;
-            btnFechamento.FlatAppearance.BorderSize = 0;
-            btnFechamento.FlatAppearance.MouseOverBackColor = Color.FromArgb(40, 40, 50);
-            btnFechamento.FlatStyle = FlatStyle.Flat;
-            btnFechamento.Font = new Font("Segoe UI", 12F);
-            btnFechamento.ForeColor = Color.White;
-            btnFechamento.Location = new Point(0, 220);
-            btnFechamento.Name = "btnFechamento";
-            btnFechamento.Padding = new Padding(20, 0, 0, 0);
-            btnFechamento.Size = new Size(250, 60);
-            btnFechamento.TabIndex = 3;
-            btnFechamento.Text = "💰 Fechamento";
-            btnFechamento.TextAlign = ContentAlignment.MiddleLeft;
-            btnFechamento.UseVisualStyleBackColor = true;
+            this.btnFechamento.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnFechamento.FlatAppearance.BorderSize = 0;
+            this.btnFechamento.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
+            this.btnFechamento.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFechamento.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnFechamento.ForeColor = System.Drawing.Color.White;
+            this.btnFechamento.Location = new System.Drawing.Point(0, 220);
+            this.btnFechamento.Name = "btnFechamento";
+            this.btnFechamento.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.btnFechamento.Size = new System.Drawing.Size(250, 60);
+            this.btnFechamento.TabIndex = 3;
+            this.btnFechamento.Text = "💰 Fechamento";
+            this.btnFechamento.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnFechamento.UseVisualStyleBackColor = true;
             // 
             // btnRetirada
             // 
-            btnRetirada.Dock = DockStyle.Top;
-            btnRetirada.FlatAppearance.BorderSize = 0;
-            btnRetirada.FlatAppearance.MouseOverBackColor = Color.FromArgb(40, 40, 50);
-            btnRetirada.FlatStyle = FlatStyle.Flat;
-            btnRetirada.Font = new Font("Segoe UI", 12F);
-            btnRetirada.ForeColor = Color.White;
-            btnRetirada.Location = new Point(0, 160);
-            btnRetirada.Name = "btnRetirada";
-            btnRetirada.Padding = new Padding(20, 0, 0, 0);
-            btnRetirada.Size = new Size(250, 60);
-            btnRetirada.TabIndex = 2;
-            btnRetirada.Text = "📦 Retirada em Loja";
-            btnRetirada.TextAlign = ContentAlignment.MiddleLeft;
-            btnRetirada.UseVisualStyleBackColor = true;
+            this.btnRetirada.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnRetirada.FlatAppearance.BorderSize = 0;
+            this.btnRetirada.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
+            this.btnRetirada.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnRetirada.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnRetirada.ForeColor = System.Drawing.Color.White;
+            this.btnRetirada.Location = new System.Drawing.Point(0, 160);
+            this.btnRetirada.Name = "btnRetirada";
+            this.btnRetirada.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.btnRetirada.Size = new System.Drawing.Size(250, 60);
+            this.btnRetirada.TabIndex = 2;
+            this.btnRetirada.Text = "📦 Retirada em Loja";
+            this.btnRetirada.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnRetirada.UseVisualStyleBackColor = true;
             // 
             // btnCaixa
             // 
-            btnCaixa.Dock = DockStyle.Top;
-            btnCaixa.FlatAppearance.BorderSize = 0;
-            btnCaixa.FlatAppearance.MouseOverBackColor = Color.FromArgb(40, 40, 50);
-            btnCaixa.FlatStyle = FlatStyle.Flat;
-            btnCaixa.Font = new Font("Segoe UI", 12F);
-            btnCaixa.ForeColor = Color.White;
-            btnCaixa.Location = new Point(0, 100);
-            btnCaixa.Name = "btnCaixa";
-            btnCaixa.Padding = new Padding(20, 0, 0, 0);
-            btnCaixa.Size = new Size(250, 60);
-            btnCaixa.TabIndex = 1;
-            btnCaixa.Text = "🎮 Frente de Caixa";
-            btnCaixa.TextAlign = ContentAlignment.MiddleLeft;
-            btnCaixa.UseVisualStyleBackColor = true;
+            this.btnCaixa.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btnCaixa.FlatAppearance.BorderSize = 0;
+            this.btnCaixa.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(50)))));
+            this.btnCaixa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnCaixa.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.btnCaixa.ForeColor = System.Drawing.Color.White;
+            this.btnCaixa.Location = new System.Drawing.Point(0, 100);
+            this.btnCaixa.Name = "btnCaixa";
+            this.btnCaixa.Padding = new System.Windows.Forms.Padding(20, 0, 0, 0);
+            this.btnCaixa.Size = new System.Drawing.Size(250, 60);
+            this.btnCaixa.TabIndex = 1;
+            this.btnCaixa.Text = "🎮 Frente de Caixa";
+            this.btnCaixa.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCaixa.UseVisualStyleBackColor = true;
             // 
             // lblLogo
             // 
-            lblLogo.Dock = DockStyle.Top;
-            lblLogo.Font = new Font("Consolas", 20.25F, FontStyle.Bold);
-            lblLogo.ForeColor = Color.FromArgb(0, 243, 255);
-            lblLogo.Location = new Point(0, 0);
-            lblLogo.Name = "lblLogo";
-            lblLogo.Size = new Size(250, 100);
-            lblLogo.TabIndex = 0;
-            lblLogo.Text = "GAMESHARK";
-            lblLogo.TextAlign = ContentAlignment.MiddleCenter;
+            this.lblLogo.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblLogo.Font = new System.Drawing.Font("Consolas", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lblLogo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
+            this.lblLogo.Location = new System.Drawing.Point(0, 0);
+            this.lblLogo.Name = "lblLogo";
+            this.lblLogo.Size = new System.Drawing.Size(250, 100);
+            this.lblLogo.TabIndex = 0;
+            this.lblLogo.Text = "GAMESHARK";
+            this.lblLogo.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // painelConteudo
             // 
-            painelConteudo.BackColor = Color.FromArgb(5, 5, 8);
-            painelConteudo.Dock = DockStyle.Fill;
-            painelConteudo.Location = new Point(250, 0);
-            painelConteudo.Name = "painelConteudo";
-            painelConteudo.Size = new Size(774, 768);
-            painelConteudo.TabIndex = 1;
+            this.painelConteudo.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(5)))), ((int)(((byte)(5)))), ((int)(((byte)(8)))));
+            this.painelConteudo.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.painelConteudo.Location = new System.Drawing.Point(250, 0);
+            this.painelConteudo.Name = "painelConteudo";
+            this.painelConteudo.Size = new System.Drawing.Size(774, 768);
+            this.painelConteudo.TabIndex = 1;
             // 
             // frmPrincipal
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1024, 768);
-            ControlBox = false;
-            Controls.Add(painelConteudo);
-            Controls.Add(painelMenu);
-            Name = "frmPrincipal";
-            StartPosition = FormStartPosition.CenterScreen;
-            Text = "GameShark PDV - Terminal Omnichannel";
-            WindowState = FormWindowState.Maximized;
-            painelMenu.ResumeLayout(false);
-            ResumeLayout(false);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(1024, 768);
+            this.ControlBox = false;
+            this.Controls.Add(this.painelConteudo);
+            this.Controls.Add(this.painelMenu);
+            this.Name = "frmPrincipal";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "GameShark PDV - Terminal Omnichannel";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.painelMenu.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
     }
 }

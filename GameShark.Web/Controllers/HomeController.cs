@@ -72,19 +72,23 @@ public class HomeController : Controller
         TempData["MensagemSucesso"] = $"Radar ativado! Avisaremos em {emailCliente} assim que o loot chegar.";
         return RedirectToAction(nameof(Index));
     }
-    // 👇 O ORÁCULO DE LOOT (QUIZ)
+
+    // 👇 O ORÁCULO DE LOOT (A página com o formulário)
+    // Se o seu arquivo HTML principal chama Quiz.cshtml, mantenha este nome. 
+    // Se chama Oraculo.cshtml, mude o nome do método para Oraculo().
     public IActionResult Quiz()
     {
         return View();
     }
 
+    // 👇 PROCESSAMENTO DO ALGORITMO (Quando o botão é clicado)
     [HttpPost]
     public async Task<IActionResult> Recomendacao(string vibe, string plataforma)
     {
         var query = _context.Produtos
             .Include(p => p.Categoria)
             .Include(p => p.Plataforma)
-            .Where(p => p.Estoque > 0)
+            .Where(p => p.Estoque > 0) // Excelente regra: só sugere o que tem em estoque!
             .AsQueryable();
 
         if (!string.IsNullOrEmpty(vibe))
@@ -97,13 +101,23 @@ public class HomeController : Controller
             query = query.Where(p => p.Plataforma!.Nome.Contains(plataforma));
         }
 
-        var recomendados = await query.Take(4).ToListAsync();
+        // Guid.NewGuid() embaralha a lista para o algoritmo sempre dar sugestões variadas!
+        var recomendados = await query
+            .OrderBy(r => Guid.NewGuid())
+            .Take(3) // Pegar 3 fica perfeito visualmente no grid do Bootstrap
+            .ToListAsync();
+
+        // Enviando os dados para a interface usar
+        ViewData["Vibe"] = vibe;
+        ViewData["Plataforma"] = plataforma;
 
         ViewData["MensagemOraculo"] = recomendados.Any()
             ? "O Oráculo analisou seu perfil e encontrou estes matches perfeitos:"
             : "Sua vibe é tão única que nosso estoque atual não deu match. Mas novas naves chegam amanhã!";
 
-        return View("Recomendacao", recomendados);
+        // Retorna a view de Resultado. Certifique-se de que o arquivo se chama "ResultadoOraculo.cshtml" 
+        // ou mude aqui para o nome exato do arquivo que você criou para exibir a resposta.
+        return View("ResultadoOraculo", recomendados);
     }
 
     public IActionResult Privacy()

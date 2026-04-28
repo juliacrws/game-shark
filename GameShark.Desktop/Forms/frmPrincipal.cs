@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GameShark.Desktop.UserControls;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -41,5 +42,12 @@ public partial class frmPrincipal : Form
     private void BtnFechamento_Click(object? sender, EventArgs e)
     {
         NavegarPara(new GameShark.Desktop.UserControls.ucFechamento());
+    }
+    private void btnFornecedores_Click(object sender, EventArgs e)
+    {
+        painelConteudo.Controls.Clear();
+        var uc = new GameShark.Desktop.UserControls.ucFornecedores();
+        uc.Dock = DockStyle.Fill;
+        painelConteudo.Controls.Add(uc);
     }
 }
