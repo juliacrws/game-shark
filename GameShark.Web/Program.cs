@@ -2,11 +2,14 @@ using GameShark.Domain.Entities;
 using GameShark.Infrastructure.Entities;
 using GameShark.Infrastructure.Persistence;
 using GameShark.Web.Services;
-using GameShark.Web.Identity; // 👈 Adicionamos o using para o nosso tradutor
+using GameShark.Web.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+// 👇 Adicionamos o namespace onde o nosso novo Seeder mora
+using GameShark.Infrastructure.Persistence.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Services.AddControllersWithViews();
 
 // 1. Configura a chamada para a API
@@ -23,7 +26,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>()
     .AddDefaultTokenProviders()
-    .AddErrorDescriber<PortuguesIdentityErrorDescriber>(); // 👈 A MÁGICA ENTRA AQUI!
+    .AddErrorDescriber<PortuguesIdentityErrorDescriber>();
 
 // 3. Configura o Cookie de Autenticação
 builder.Services.ConfigureApplicationCookie(options =>
@@ -41,10 +44,10 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddScoped<GameShark.Web.Areas.Admin.Services.DashboardService>();
 
-// 1. Configura a memória temporária do servidor (Necessário para a Sessão funcionar)
+// 5. Configura a memória temporária do servidor (Necessário para a Sessão funcionar)
 builder.Services.AddDistributedMemoryCache();
 
-// 2. Configura a Sessão em si
+// 6. Configura a Sessão em si
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -69,7 +72,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 // 👇 A Sessão OBRIGATORIAMENTE tem que ficar aqui! 
-// (Depois do Routing/Auth e ANTES do MapControllerRoute)
 app.UseSession();
 
 app.MapControllerRoute(
@@ -80,21 +82,21 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-
-// 👇 CÓDIGO NOVO AQUI: Inicializa os cargos no banco antes de rodar o app
+// 👇 A MÁGICA ACONTECE AQUI! 
+// Substituímos o RoleSeeder antigo pelo nosso DatabaseSeeder completo
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
     try
     {
-        // O C# vai pedir para você importar o namespace do RoleSeeder, 
-        // ou você pode colocar "using GameShark.Web.Data;" lá no topo!
-        await GameShark.Web.Data.RoleSeeder.SeedRolesAsync(services);
+        // Agora sim ele vai popular Jogos, Categorias, Plataformas E os Cargos!
+        await DatabaseSeeder.SeedAsync(services);
     }
     catch (Exception ex)
     {
         var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError(ex, "Um erro ocorreu ao injetar os cargos no banco de dados.");
+        logger.LogError(ex, "Um erro ocorreu ao injetar os dados iniciais no banco de dados.");
     }
 }
+
 app.Run();
